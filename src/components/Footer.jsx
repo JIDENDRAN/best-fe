@@ -25,9 +25,19 @@ const Footer = () => {
           {/* Brand & Description */}
           <div>
             <h3 className="text-white font-poppins font-bold text-xl mb-4">{t('Madurai Best Tours and Travels')}</h3>
-            <p className="text-sm leading-relaxed mb-6">
+            <p className="text-sm leading-relaxed mb-4">
               {t('Your trusted travel partner for local & outstation tours in and around Madurai.')}
             </p>
+            <div className="mb-6 space-y-2">
+              <a href="tel:+916382513075" className="flex items-center gap-2 text-sm hover:text-yellow-500 transition-colors">
+                <Phone className="w-4 h-4 text-yellow-500" />
+                +91 63825 13075
+              </a>
+              <a href="mailto:info@maduraibesttravels.com" className="flex items-center gap-2 text-sm hover:text-yellow-500 transition-colors">
+                <Mail className="w-4 h-4 text-yellow-500" />
+                info@maduraibesttravels.com
+              </a>
+            </div>
             <div className="flex space-x-4">
               <a href="#" className="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center hover:bg-yellow-500 hover:text-slate-900 transition-colors">
                 <FacebookIcon className="w-5 h-5" />
