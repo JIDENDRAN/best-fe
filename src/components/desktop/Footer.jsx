@@ -69,9 +69,20 @@ const Footer = () => {
               </div>
             </div>
 
-            <p className="text-white/60 text-xs leading-relaxed mb-6 max-w-sm">
+            <p className="text-white/60 text-xs leading-relaxed mb-4 max-w-sm">
               {t('Curated heritage journeys, premium private tours & travel packages. Travel in safety and comfort since 2015.')}
             </p>
+
+            <div className="mb-6 space-y-2">
+              <a href="tel:+916382513075" className="flex items-center gap-2 text-xs text-white/80 hover:text-[#f5c842] transition-colors">
+                <Phone className="w-3.5 h-3.5 text-[#f5c842]" />
+                +91 63825 13075
+              </a>
+              <a href="mailto:info@maduraibesttravels.com" className="flex items-center gap-2 text-xs text-white/80 hover:text-[#f5c842] transition-colors">
+                <Mail className="w-3.5 h-3.5 text-[#f5c842]" />
+                info@maduraibesttravels.com
+              </a>
+            </div>
 
             {/* Social Links */}
             <div className="flex gap-2.5 mb-6">
