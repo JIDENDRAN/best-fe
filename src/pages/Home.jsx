@@ -44,7 +44,7 @@ const defaultVehicles = [
     perKm: 'Rs. 17',
     minKm: '300 kms',
     extraKm: 'Rs. 22',
-    driverCharge: 'Rs. 300 / day',
+    driverCharge: 'Rs. 400 / day',
   },
   {
     name: 'Toyota Innova',
@@ -56,7 +56,7 @@ const defaultVehicles = [
     perKm: 'Rs. 13',
     minKm: '300 kms',
     extraKm: 'Rs. 19',
-    driverCharge: 'Rs. 300 / day',
+    driverCharge: 'Rs. 400 / day',
   },
   {
     name: 'Swift Dzire',
@@ -68,7 +68,7 @@ const defaultVehicles = [
     perKm: 'Rs. 11',
     minKm: '250 kms',
     extraKm: 'Rs. 14',
-    driverCharge: 'Rs. 300 / day',
+    driverCharge: 'Rs. 400 / day',
   },
   {
     name: 'Tempo Traveller (12 Seater)',
@@ -80,7 +80,7 @@ const defaultVehicles = [
     perKm: 'Rs. 18',
     minKm: '350 kms',
     extraKm: 'Rs. 25',
-    driverCharge: 'Rs. 300 / day',
+    driverCharge: 'Rs. 400 / day',
   },
   {
     name: 'Tempo Traveller (18 Seater)',
@@ -92,7 +92,7 @@ const defaultVehicles = [
     perKm: 'Rs. 22',
     minKm: '300 kms',
     extraKm: 'Rs. 30',
-    driverCharge: 'Rs. 300 / day',
+    driverCharge: 'Rs. 400 / day',
   },
   {
     name: 'Urbania',
@@ -104,7 +104,7 @@ const defaultVehicles = [
     perKm: 'Rs. 27',
     minKm: '250 kms',
     extraKm: 'Rs. 37',
-    driverCharge: 'Rs. 300 / day',
+    driverCharge: 'Rs. 400 / day',
   },
 ];
 
@@ -629,6 +629,7 @@ const Home = () => {
                   <img
                     src={getVehicleImage(v.image)}
                     alt={v.name}
+                    loading="lazy"
                     className="w-full max-h-64 object-contain drop-shadow-xl hover:scale-105 transition-transform duration-500"
                   />
                   <div className="flex items-center gap-4 mt-4">
@@ -779,7 +780,7 @@ const Home = () => {
                     onClick={() => window.location.href = '/packages'}
                   >
                     <div className="aspect-[3/4] relative rounded-3xl overflow-hidden border border-[#1a3c34]/5 shadow-sm">
-                      <img src={dest.img} alt={dest.name} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
+                      <img src={dest.img} alt={dest.name} loading="lazy" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
                       <div className="overlay absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
                       <div className="absolute bottom-0 left-0 p-5 text-left z-10">
                         <h3 className="text-white font-poppins font-black text-lg leading-tight">{dest.name}</h3>
@@ -827,6 +828,7 @@ const Home = () => {
                   <img
                     src={getPackageImage(pkg.image)}
                     alt={pkg.name}
+                    loading="lazy"
                     className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                   />
                   {/* Duration badge at top right */}
@@ -965,7 +967,7 @@ const Home = () => {
       {/* ── TESTIMONIALS ─────────────────────────────────── */}
       <section className="py-10 lg:py-16 bg-[#0f2420] relative overflow-hidden text-white">
         <div className="absolute inset-0 z-0">
-          <img src={MeenakshiBg} alt="" className="w-full h-full object-cover opacity-10" />
+          <img src={MeenakshiBg} alt="" loading="lazy" className="w-full h-full object-cover opacity-10" />
           <div className="absolute inset-0 bg-[#0f2420]/90" />
         </div>
         <div className="max-w-7xl mx-auto px-4 lg:px-6 relative z-10">

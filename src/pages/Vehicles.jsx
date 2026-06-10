@@ -52,31 +52,31 @@ const defaultVehicles = [
     id: 2, type: 'suv', name: 'Toyota Innova', seats: '7 Seats', bags: '4 Bags', ac: 'AC', price: '₹19/km',
     image: 'car 2.jpeg',
     dayRent: 'Rs. 2300', perKm: 'Rs. 13', minKm: '300 kms',
-    extraKm: 'Rs. 19', driverCharge: 'Rs. 300 / day',
+    extraKm: 'Rs. 19', driverCharge: 'Rs. 400 / day',
   },
   {
     id: 3, type: 'sedan', name: 'Swift Dzire', seats: '4 Seats', bags: '2 Bags', ac: 'AC', price: '₹14/km',
     image: 'car 3.png',
     dayRent: 'Rs. 1600', perKm: 'Rs. 11', minKm: '250 kms',
-    extraKm: 'Rs. 14', driverCharge: 'Rs. 300 / day',
+    extraKm: 'Rs. 14', driverCharge: 'Rs. 400 / day',
   },
   {
     id: 4, type: 'tempo', name: 'Tempo Traveller (12 Seater)', seats: '12 Seats', bags: '6 Bags', ac: 'AC', price: '₹25/km',
     image: 'car 4.jpg',
     dayRent: 'Rs. 2800', perKm: 'Rs. 18', minKm: '350 kms',
-    extraKm: 'Rs. 25', driverCharge: 'Rs. 300 / day',
+    extraKm: 'Rs. 25', driverCharge: 'Rs. 400 / day',
   },
   {
     id: 5, type: 'tempo', name: 'Tempo Traveller (18 Seater)', seats: '18 Seats', bags: '8 Bags', ac: 'AC', price: '₹30/km',
     image: 'car 5.jpeg',
     dayRent: 'Rs. 3900', perKm: 'Rs. 22', minKm: '300 kms',
-    extraKm: 'Rs. 30', driverCharge: 'Rs. 300 / day',
+    extraKm: 'Rs. 30', driverCharge: 'Rs. 400 / day',
   },
   {
     id: 6, type: 'tempo', name: 'Urbania', seats: '12+1 / 14+1 Seats', bags: '8 Bags', ac: 'AC', price: '₹27/km',
     image: 'car 6.jpeg',
     dayRent: 'Rs. 7500', perKm: 'Rs. 27', minKm: '250 kms',
-    extraKm: 'Rs. 37', driverCharge: 'Rs. 300 / day',
+    extraKm: 'Rs. 37', driverCharge: 'Rs. 400 / day',
   },
 ];
 
@@ -207,6 +207,7 @@ const Vehicles = () => {
                       <img
                         src={getVehicleImage(v.image)}
                         alt={v.name}
+                        loading="lazy"
                         className="w-full max-h-64 object-contain drop-shadow-xl hover:scale-105 transition-transform duration-500"
                         onError={e => { e.target.src = getVehicleImage('sedan_cab-removebg-preview.png'); }}
                       />
@@ -341,6 +342,7 @@ const Vehicles = () => {
                 <img
                   src={getVehicleImage('innova_crysta-removebg-preview.png')}
                   alt="Custom Vehicle"
+                  loading="lazy"
                   className="h-52 object-contain drop-shadow-2xl filter brightness-110"
                 />
               </div>
