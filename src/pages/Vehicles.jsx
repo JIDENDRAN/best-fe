@@ -244,19 +244,15 @@ const Vehicles = () => {
                           <div className="bg-[#fcfcfc] border border-gray-100 rounded-2xl p-4 shadow-sm">
                             <div className="flex items-center gap-2 mb-3">
                               <div className="w-2 h-2 rounded-full bg-yellow-400"></div>
-                              <span className="text-[11px] font-black text-gray-400 uppercase tracking-widest"> Day Rental Plan</span>
+                              <span className="text-[11px] font-black text-gray-400 uppercase tracking-widest">Outstation Plan</span>
                             </div>
                             <div className="flex justify-between items-center mb-2.5">
                               <span className="text-sm font-bold text-[#6b7280]">Rate</span>
-                              <span className="text-sm font-bold text-[#111827] bg-white border border-gray-100 px-3 py-1 rounded-md shadow-sm">{v.perKm || v.price}</span>
-                            </div>
-                            <div className="flex justify-between items-center mb-2.5">
-                              <span className="text-sm font-bold text-[#6b7280]">Min Distance</span>
-                              <span className="text-sm font-bold text-[#111827] bg-white border border-gray-100 px-3 py-1 rounded-md shadow-sm">{v.minKm?.toLowerCase().includes('above') ? v.minKm : `Above ${v.minKm || '300 kms'}`}</span>
+                              <span className="text-sm font-bold text-[#111827] bg-white border border-gray-100 px-3 py-1 rounded-md shadow-sm">{v.price || v.perKm}</span>
                             </div>
                             <div className="flex justify-between items-center">
-                              <span className="text-sm font-bold text-[#6b7280]">Driver Charge</span>
-                              <span className="text-sm font-bold text-[#111827] bg-white border border-gray-100 px-3 py-1 rounded-md shadow-sm">{v.driverCharge || '—'}</span>
+                              <span className="text-sm font-bold text-[#6b7280]">Min Distance</span>
+                              <span className="text-sm font-bold text-[#111827] bg-white border border-gray-100 px-3 py-1 rounded-md shadow-sm">{v.minKm?.toLowerCase().includes('above') ? v.minKm : `Above ${v.minKm || '300 kms'}`}</span>
                             </div>
                           </div>
 
@@ -264,7 +260,7 @@ const Vehicles = () => {
                           <div className="bg-[#fcfcfc] border border-gray-100 rounded-2xl p-4 shadow-sm">
                             <div className="flex items-center gap-2 mb-3">
                               <div className="w-2 h-2 rounded-full bg-green-500"></div>
-                              <span className="text-[11px] font-black text-gray-400 uppercase tracking-widest">Outstation Plan</span>
+                              <span className="text-[11px] font-black text-gray-400 uppercase tracking-widest">Day Rental Plan</span>
                             </div>
                             <div className="flex justify-between items-center mb-2.5">
                               <span className="text-sm font-bold text-[#6b7280]">Base Rent</span>
@@ -272,7 +268,7 @@ const Vehicles = () => {
                             </div>
                             <div className="flex justify-between items-center mb-2.5">
                               <span className="text-sm font-bold text-[#6b7280]">Per km Charge</span>
-                              <span className="text-sm font-bold text-[#111827] bg-white border border-gray-100 px-3 py-1 rounded-md shadow-sm">{v.extraKm || v.perKm || '—'}</span>
+                              <span className="text-sm font-bold text-[#111827] bg-white border border-gray-100 px-3 py-1 rounded-md shadow-sm">{v.perKm ? (v.perKm.includes('/km') ? v.perKm : `${v.perKm}/km`) : '—'}</span>
                             </div>
                             <div className="flex justify-between items-center">
                               <span className="text-sm font-bold text-[#6b7280]">Driver Charge</span>
