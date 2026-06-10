@@ -56,7 +56,7 @@ const defaultVehicles = [
     perKm: 'Rs. 13',
     minKm: '300 kms',
     extraKm: 'Rs. 19',
-    driverCharge: 'Rs. 400 / day',
+    driverCharge: 'Rs. 300 / day',
   },
   {
     name: 'Swift Dzire',
@@ -68,7 +68,7 @@ const defaultVehicles = [
     perKm: 'Rs. 11',
     minKm: '250 kms',
     extraKm: 'Rs. 14',
-    driverCharge: 'Rs. 400 / day',
+    driverCharge: 'Rs. 300 / day',
   },
   {
     name: 'Tempo Traveller (12 Seater)',
@@ -80,7 +80,7 @@ const defaultVehicles = [
     perKm: 'Rs. 18',
     minKm: '350 kms',
     extraKm: 'Rs. 25',
-    driverCharge: 'Rs. 400 / day',
+    driverCharge: 'Rs. 300 / day',
   },
   {
     name: 'Tempo Traveller (18 Seater)',
@@ -92,7 +92,7 @@ const defaultVehicles = [
     perKm: 'Rs. 22',
     minKm: '300 kms',
     extraKm: 'Rs. 30',
-    driverCharge: 'Rs. 400 / day',
+    driverCharge: 'Rs. 300 / day',
   },
   {
     name: 'Urbania',
@@ -104,7 +104,7 @@ const defaultVehicles = [
     perKm: 'Rs. 27',
     minKm: '250 kms',
     extraKm: 'Rs. 37',
-    driverCharge: 'Rs. 400 / day',
+    driverCharge: 'Rs. 300 / day',
   },
 ];
 
