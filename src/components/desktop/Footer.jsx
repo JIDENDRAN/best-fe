@@ -1,15 +1,17 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Phone, Mail, MapPin, Heart } from 'lucide-react';
+import { Phone, Mail, MapPin, Heart, MessageSquare } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import logo from '../../assets/logo.png';
 import Logo from '../../assets/logo.jpeg';
 
-const FacebookIcon = () => (
-  <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-    <path fillRule="evenodd" d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z" clipRule="evenodd" />
-  </svg>
+const PhoneIcon = () => (
+  <Phone className="w-5 h-5" />
+);
+
+const MessageIcon = () => (
+  <MessageSquare className="w-5 h-5" />
 );
 
 const InstagramIcon = () => (
@@ -78,24 +80,26 @@ const Footer = () => {
                 <Phone className="w-3.5 h-3.5 text-[#f5c842]" />
                 +91 63825 13075
               </a>
-              <a href="mailto:info@maduraibesttravels.com" className="flex items-center gap-2 text-xs text-white/80 hover:text-[#f5c842] transition-colors">
+              <a href="mailto:maduraibesttoursandtravels@gmail.com" className="flex items-center gap-2 text-xs text-white/80 hover:text-[#f5c842] transition-colors">
                 <Mail className="w-3.5 h-3.5 text-[#f5c842]" />
-                info@maduraibesttravels.com
+                maduraibesttoursandtravels@gmail.com
               </a>
             </div>
 
             {/* Social Links */}
             <div className="flex gap-2.5 mb-6">
               {[
-                { href: '#', icon: <FacebookIcon />, hover: 'hover:bg-blue-600' },
-                { href: '#', icon: <InstagramIcon />, hover: 'hover:bg-pink-500' },
-                { href: 'https://wa.me/916382513075', icon: <WhatsAppIcon />, hover: 'hover:bg-green-500' },
+                { href: 'sms:+916382513075', icon: <MessageIcon />, hover: 'hover:bg-blue-500', label: 'Message' },
+                { href: 'tel:+916382513075', icon: <PhoneIcon />, hover: 'hover:bg-emerald-600', label: 'Call' },
+                { href: 'https://www.instagram.com/maduraibesttourstravels?utm_source=qr&igsh=dXUzYjVpaXd3NTB6', icon: <InstagramIcon />, hover: 'hover:bg-pink-500', label: 'Instagram' },
+                { href: 'https://wa.me/916382513075', icon: <WhatsAppIcon />, hover: 'hover:bg-green-500', label: 'WhatsApp' },
               ].map((s, i) => (
                 <a
                   key={i}
                   href={s.href}
                   target={s.href.startsWith('http') ? '_blank' : undefined}
                   rel="noreferrer"
+                  title={s.label}
                   className={`w-9 h-9 bg-white/10 ${s.hover} rounded-xl flex items-center justify-center transition-all hover:scale-110`}
                 >
                   {s.icon}
@@ -180,11 +184,11 @@ const Footer = () => {
         <div className="border-t border-white/10 pt-8 mt-8">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-white/50">
             <p>© 2026 Madurai Best Tours and Travels. All rights reserved.</p>
-            <p className="flex items-center gap-2">
-              <span>Developed by</span>
+            <p className="flex items-center gap-2 text-sm">
+              <span className="text-white/60">Developed by</span>
               <a href="#" className="flex items-center gap-2 hover:opacity-80 transition-opacity">
-                <img src={logo} alt="CodeThrive Logo" className="h-5 w-auto object-contain" />
-                <span className="font-poppins font-bold text-white tracking-wide">Code Thrive Infotech</span>
+                <img src={logo} alt="CodeThrive Logo" className="h-6.5 w-auto object-contain" />
+                <span className="font-poppins font-extrabold text-white tracking-wide text-sm sm:text-base">Code Thrive Infotech</span>
               </a>
             </p>
           </div>

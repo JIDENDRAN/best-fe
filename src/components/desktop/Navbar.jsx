@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { ChevronDown, ShieldCheck, Phone, Menu, X } from 'lucide-react';
@@ -11,11 +11,21 @@ const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const location = useLocation();
+  const langRef = useRef(null);
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 30);
+    const handleClickOutside = (e) => {
+      if (langRef.current && !langRef.current.contains(e.target)) {
+        setLangOpen(false);
+      }
+    };
     window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
   }, []);
 
   useEffect(() => { setMobileOpen(false); }, [location]);
@@ -32,9 +42,9 @@ const Navbar = () => {
   ];
 
   const languages = [
-    { code: 'en', label: 'English', flag: '🇬🇧' },
-    { code: 'ta', label: 'தமிழ்', flag: '🇮🇳' },
-    { code: 'hi', label: 'हिन्दी', flag: '🇮🇳' },
+    { code: 'en', label: 'English' },
+    { code: 'ta', label: 'தமிழ்' },
+    { code: 'hi', label: 'हिन्दी' },
   ];
 
   const isActive = (path) => location.pathname === path;
@@ -89,15 +99,14 @@ const Navbar = () => {
             </div>
 
             {/* Right Actions */}
-            <div className="hidden lg:flex items-center gap-3">
+            <div className="flex items-center gap-2 sm:gap-3">
               {/* Language */}
-              <div className="relative">
+              <div className="relative" ref={langRef}>
                 <button
                   onClick={() => setLangOpen(!langOpen)}
-                  className="flex items-center gap-1.5 text-white/80 hover:text-white text-sm font-medium px-3 py-2 rounded-lg hover:bg-white/10 transition-all"
+                  className="flex items-center gap-1 text-white/80 hover:text-white text-sm font-medium px-2 py-1.5 sm:px-3 sm:py-2 rounded-lg hover:bg-white/10 transition-all"
                 >
-                  {languages.find(l => l.code === i18n.language)?.flag}
-                  <span>{languages.find(l => l.code === i18n.language)?.label?.slice(0, 2)}</span>
+                  <span>{languages.find(l => l.code === i18n.language)?.label || 'English'}</span>
                   <ChevronDown className={`w-3.5 h-3.5 transition-transform ${langOpen ? 'rotate-180' : ''}`} />
                 </button>
                 <AnimatePresence>
@@ -117,7 +126,6 @@ const Navbar = () => {
                             : 'text-white/80 hover:text-white hover:bg-white/10'
                             }`}
                         >
-                          <span>{lang.flag}</span>
                           {lang.label}
                         </button>
                       ))}
@@ -126,32 +134,32 @@ const Navbar = () => {
                 </AnimatePresence>
               </div>
 
-              {/* Call CTA */}
-              <a
-                href="tel:6382513075"
-                className="flex items-center gap-2 bg-[#d4951e] hover:bg-[#f0a93a] text-white text-sm font-bold px-5 py-2.5 rounded-full transition-all duration-300 hover:shadow-lg hover:shadow-[rgba(212,149,30,0.4)] hover:-translate-y-0.5"
-              >
-                <Phone className="w-4 h-4" />
-                Book Now
-              </a>
+              {/* Call CTA & Admin (Desktop Only) */}
+              <div className="hidden lg:flex items-center gap-3">
+                <a
+                  href="tel:6382513075"
+                  className="flex items-center gap-2 bg-[#d4951e] hover:bg-[#f0a93a] text-white text-sm font-bold px-5 py-2.5 rounded-full transition-all duration-300 hover:shadow-lg hover:shadow-[rgba(212,149,30,0.4)] hover:-translate-y-0.5"
+                >
+                  <Phone className="w-4 h-4" />
+                  Book Now
+                </a>
+                <Link
+                  to="/admin/dashboard"
+                  className="w-9 h-9 rounded-full flex items-center justify-center border border-white/20 text-white/60 hover:text-white hover:border-white/50 transition-all"
+                  title="Admin"
+                >
+                  <ShieldCheck className="w-4 h-4" />
+                </Link>
+              </div>
 
-              {/* Admin */}
-              <Link
-                to="/admin/dashboard"
-                className="w-9 h-9 rounded-full flex items-center justify-center border border-white/20 text-white/60 hover:text-white hover:border-white/50 transition-all"
-                title="Admin"
+              {/* Mobile Menu Button */}
+              <button
+                className="lg:hidden text-white p-2 rounded-lg hover:bg-white/10 transition-colors"
+                onClick={() => setMobileOpen(!mobileOpen)}
               >
-                <ShieldCheck className="w-4 h-4" />
-              </Link>
+                {mobileOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+              </button>
             </div>
-
-            {/* Mobile Menu Button */}
-            <button
-              className="lg:hidden text-white p-2 rounded-lg hover:bg-white/10 transition-colors"
-              onClick={() => setMobileOpen(!mobileOpen)}
-            >
-              {mobileOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-            </button>
           </div>
         </div>
       </motion.nav>
@@ -213,22 +221,10 @@ const Navbar = () => {
                   </Link>
                 </motion.div>
               </nav>
-              <div className="p-4 border-t border-white/10 space-y-3">
+              <div className="p-4 border-t border-white/10">
                 <a href="tel:6382513075" className="flex items-center justify-center gap-2 w-full bg-[#d4951e] text-white font-bold py-3 rounded-xl">
                   <Phone className="w-4 h-4" /> +91 63825 13075
                 </a>
-                <div className="flex gap-2">
-                  {languages.map(lang => (
-                    <button
-                      key={lang.code}
-                      onClick={() => changeLanguage(lang.code)}
-                      className={`flex-1 py-2 rounded-lg text-xs font-bold transition-all ${i18n.language === lang.code ? 'bg-white/20 text-white' : 'text-white/60 hover:text-white'
-                        }`}
-                    >
-                      {lang.flag} {lang.label.slice(0, 2)}
-                    </button>
-                  ))}
-                </div>
               </div>
             </motion.div>
           </>

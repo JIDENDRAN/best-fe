@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { Menu, X, ChevronDown, Car, ShieldCheck } from 'lucide-react';
@@ -11,14 +11,27 @@ const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [langOpen, setLangOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const langRef = useRef(null);
+  const mobileLangRef = useRef(null);
 
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20);
+    const handleScroll = () => setIsScrolled(window.scrollY > 20);
+    const handleClickOutside = (e) => {
+      if (langOpen) {
+        const insideDesktop = langRef.current && langRef.current.contains(e.target);
+        const insideMobile = mobileLangRef.current && mobileLangRef.current.contains(e.target);
+        if (!insideDesktop && !insideMobile) {
+          setLangOpen(false);
+        }
+      }
     };
     window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [langOpen]);
 
   const toggleMenu = () => setIsOpen(!isOpen);
 
@@ -37,8 +50,8 @@ const Navbar = () => {
 
   const languages = [
     { code: 'en', label: 'English' },
-    { code: 'ta', label: 'தமிழ் (Tamil)' },
-    { code: 'hi', label: 'हिन्दी (Hindi)' }
+    { code: 'ta', label: 'தமிழ்' },
+    { code: 'hi', label: 'हिन्दी' }
   ];
 
   return (
@@ -73,16 +86,15 @@ const Navbar = () => {
             ))}
 
             {/* Language Selector */}
-            <div className="relative">
+              <div className="relative" ref={langRef}>
               <button
                 onClick={() => setLangOpen(!langOpen)}
                 className="flex items-center gap-1 border border-slate-200 px-4 py-2 rounded-full hover:bg-slate-50 transition-colors"
               >
-                <span>{languages.find(l => l.code === i18n.language)?.label || 'English'}</span>
+                <span>{languages.find(l => l.code === i18n.language)?.label.split(' ')[0] || 'English'}</span>
                 <ChevronDown className="w-4 h-4" />
               </button>
-              
-              {langOpen && (
+                            {langOpen && (
                 <motion.div
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
@@ -112,15 +124,17 @@ const Navbar = () => {
           </div>
 
           {/* Mobile Header (Language Selector + Menu Button) */}
-          <div className="md:hidden flex items-center justify-between w-full px-4">
-            {/* Language Selector */}
+          <div className="md:hidden flex items-center gap-2">
+            {/* Language Selector (Mobile) */}
             <button
+              ref={mobileLangRef}
               onClick={() => setLangOpen(!langOpen)}
-              className="flex items-center gap-1 border border-slate-200 px-4 py-2 rounded-full hover:bg-slate-50 transition-colors"
+              className="flex items-center gap-1 border border-slate-200 px-3 py-1.5 rounded-full hover:bg-slate-50 transition-colors text-sm"
             >
-              <span>{languages.find(l => l.code === i18n.language)?.label || 'English'}</span>
+              <span>{languages.find(l => l.code === i18n.language)?.label.split(' ')[0] || 'En'}</span>
               <ChevronDown className="w-4 h-4" />
             </button>
+
             {/* Mobile Menu Button */}
             <button onClick={toggleMenu} className="p-2 rounded-md text-slate-700 hover:bg-slate-100">
               {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
@@ -137,24 +151,7 @@ const Navbar = () => {
           className="md:hidden bg-white border-t border-slate-100"
         >
           <div className="px-4 pt-2 pb-6 space-y-1">
-  {/* Mobile Language Selection */}
-  <div className="pt-4 mt-4 border-t border-slate-100">
-    <p className="px-3 text-sm text-slate-500 mb-2">Select Language</p>
-    {languages.map((lang) => (
-      <button
-        key={lang.code}
-        onClick={() => {
-          changeLanguage(lang.code);
-          setIsOpen(false);
-        }}
-        className={`block w-full text-left px-3 py-2 rounded-lg ${
-          i18n.language === lang.code ? 'bg-yellow-50 text-yellow-700' : 'text-slate-700 hover:bg-slate-50'
-        }`}
-      >
-        {lang.label}
-      </button>
-    ))}
-  </div>
+
 
   {navLinks.map((link) => (
     <Link
