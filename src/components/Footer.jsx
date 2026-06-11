@@ -102,9 +102,9 @@ const Footer = () => {
             © 2026 Madurai Best Tours and Travels. All Rights Reserved.
           </p>
           <div className="flex space-x-4 text-sm text-slate-300">
-            <a href="#" className="hover:text-white transition-colors">{t('Privacy Policy')}</a>
+            <a href="/privacy-policy" className="hover:text-white transition-colors">{t('Privacy Policy')}</a>
             <span>|</span>
-            <a href="#" className="hover:text-white transition-colors">{t('Terms & Conditions')}</a>
+            <a href="/terms-and-conditions" className="hover:text-white transition-colors">{t('Terms & Conditions')}</a>
           </div>
         </div>
       </div>
