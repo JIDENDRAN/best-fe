@@ -4,6 +4,10 @@
     <loc>https://www.maduraibesttoursandtravels.in/</loc>
     <priority>1.0</priority>
     <changefreq>weekly</changefreq>
+    <image:image xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+      <image:loc>https://www.maduraibesttoursandtravels.in/logo.jpeg</image:loc>
+      <image:title>Madurai Best Tours and Travels</image:title>
+    </image:image>
   </url>
   <url>
     <loc>https://www.maduraibesttoursandtravels.in/about</loc>
