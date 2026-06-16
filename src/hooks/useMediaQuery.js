@@ -10,6 +10,7 @@ import { useState, useEffect } from 'react';
  */
 export const useMediaQuery = () => {
   const getBreakpoint = () => {
+    if (typeof window === 'undefined') return 'desktop';
     if (window.innerWidth >= 1025) return 'desktop';
     if (window.innerWidth >= 768) return 'tablet';
     return 'mobile';

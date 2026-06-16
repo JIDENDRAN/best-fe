@@ -1,6 +1,6 @@
 // src/App.jsx
 import React, { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
+import { Routes, Route, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { motion, AnimatePresence } from 'framer-motion';
 import DesktopLayout from './components/desktop/DesktopLayout';
@@ -25,6 +25,41 @@ const AppContent = () => {
       });
     }
   }, [location]);
+
+  // Dynamic Route-Based Metadata (SEO) for client-side navigation
+  useEffect(() => {
+    const routeTitles = {
+      '/': 'Madurai Best Tours and Travels | Taxi Service, Cab Booking & Tour Packages',
+      '/about': 'About Us | Madurai Best Tours and Travels | South India Taxi',
+      '/vehicles': 'Our Premium Fleet - Cabs & Tempo Travellers | Madurai Best Tours',
+      '/packages': 'South India Tour Packages | Madurai Best Tours and Travels',
+      '/gallery': 'Our Journey Gallery | Madurai Best Tours and Travels',
+      '/contact': 'Contact Us | Madurai Best Tours and Travels | 24/7 Cab Booking',
+      '/privacy-policy': 'Privacy Policy | Madurai Best Tours and Travels',
+      '/terms-and-conditions': 'Terms & Conditions | Madurai Best Tours and Travels'
+    };
+
+    const routeDescriptions = {
+      '/': 'Madurai Best Tours and Travels provides taxi services, airport pickup and drop, local sightseeing, outstation cab booking, tempo traveller rental and customized South India tour packages.',
+      '/about': 'Learn more about Madurai Best Tours and Travels. We are your trusted travel partner in South India since 2015, providing premium taxi services, outstation cabs, and custom tours.',
+      '/vehicles': 'Choose from our wide range of well-maintained vehicles including Swift Dzire, Innova Crysta, Tempo Traveller, and Urbania for a comfortable ride in Madurai.',
+      '/packages': 'Book customized tour packages for Madurai local sightseeing, Rameswaram, Kodaikanal, Ooty, Munnar, Kanyakumari, and Cochin with expert guides.',
+      '/gallery': 'View glimpses of beautiful destinations, happy moments, and tour experiences with our travelers across South India.',
+      '/contact': 'Get in touch with Madurai Best Tours and Travels. Contact us 24/7 for booking cabs, tempo travellers, and custom South India tour packages.',
+      '/privacy-policy': 'Read the privacy policy of Madurai Best Tours and Travels regarding user data and booking details.',
+      '/terms-and-conditions': 'Review the terms and conditions for booking taxis, cabs, and tour packages with Madurai Best Tours and Travels.'
+    };
+
+    const title = routeTitles[location.pathname] || routeTitles['/'];
+    const desc = routeDescriptions[location.pathname] || routeDescriptions['/'];
+
+    document.title = title;
+    
+    const metaDesc = document.querySelector('meta[name="description"]');
+    if (metaDesc) {
+      metaDesc.setAttribute('content', desc);
+    }
+  }, [location.pathname]);
 
   const isAdminRoute = location.pathname.startsWith('/admin');
   const { i18n } = useTranslation();
@@ -122,9 +157,5 @@ const AppContent = () => {
 };
 
 export default function App() {
-  return (
-    <Router>
-      <AppContent />
-    </Router>
-  );
+  return <AppContent />;
 }

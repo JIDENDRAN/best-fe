@@ -343,8 +343,12 @@ const resources = {
   }
 };
 
-i18n
-  .use(LanguageDetector)
+const instance = i18n;
+if (typeof window !== 'undefined') {
+  instance.use(LanguageDetector);
+}
+
+instance
   .use(initReactI18next)
   .init({
     resources,
