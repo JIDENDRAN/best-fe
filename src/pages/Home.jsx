@@ -380,7 +380,7 @@ const Home = () => {
                   className="w-11/12 md:w-5/6 lg:w-3/4 max-w-md md:max-w-lg lg:max-w-xl xl:max-w-2xl object-contain drop-shadow-2xl rounded-3xl"
                 />
                 <h1 className="sr-only">
-                  Madurai Best Tours and Travels – Taxi Service, Cab Booking & Tour Packages in Madurai
+                  Madurai Best Tours and Travels
                 </h1>
               </div>
             </motion.div>
@@ -604,7 +604,7 @@ const Home = () => {
               Why Choose Madurai Best Tours and Travels?
             </h2>
             <p className="text-gray-600 max-w-3xl mx-auto leading-relaxed text-sm md:text-base">
-              <strong>Madurai Best Tours and Travels</strong> offers taxi services, airport transfers, tempo traveller rentals, local sightseeing and South India tour packages. We guarantee the best rates, well-maintained vehicles, and professional drivers to ensure your journey is safe and comfortable.
+              <strong>Madurai Best Tours and Travels</strong> offers <a href="/madurai-taxi-service" className="text-[#d4951e] hover:underline font-semibold">Madurai Best Tours and Travels Taxi Service</a>, airport transfers, tempo traveller rentals, local sightseeing and South India tour packages. We guarantee the best rates, well-maintained vehicles, and professional drivers to ensure your journey is safe and comfortable.
             </p>
           </div>
         </div>
