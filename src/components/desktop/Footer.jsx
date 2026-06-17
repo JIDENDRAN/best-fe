@@ -39,11 +39,12 @@ const Footer = () => {
   ];
 
   const services = [
-    'Local Tours',
-    'Outstation Trips',
-    'Airport Transfers',
-    'Corporate Travel',
-    'Custom Packages',
+    { name: 'Madurai Taxi Service', path: '/madurai-taxi-service' },
+    { name: 'Airport Transfers', path: '/madurai-airport-taxi' },
+    { name: 'Tour Packages', path: '/madurai-tour-packages' },
+    { name: 'Madurai to Rameswaram', path: '/madurai-to-rameswaram-taxi' },
+    { name: 'Madurai to Kodaikanal', path: '/madurai-to-kodaikanal-taxi' },
+    { name: 'Tempo Traveller Rental', path: '/tempo-traveller-rental-madurai' },
   ];
 
   const destinations = [
@@ -150,10 +151,10 @@ const Footer = () => {
             </h3>
             <ul className="space-y-3">
               {services.map(service => (
-                <li key={service}>
-                  <span className="text-white/60 hover:text-[#f5c842] text-xs transition-colors cursor-pointer hover:pl-1 duration-200 block">
-                    {t(service)}
-                  </span>
+                <li key={service.name}>
+                  <Link to={service.path} className="text-white/60 hover:text-[#f5c842] text-xs transition-colors cursor-pointer hover:pl-1 duration-200 block">
+                    {t(service.name)}
+                  </Link>
                 </li>
               ))}
             </ul>

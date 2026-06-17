@@ -20,13 +20,19 @@ const routes = [
   '/gallery',
   '/contact',
   '/privacy-policy',
-  '/terms-and-conditions'
+  '/terms-and-conditions',
+  '/madurai-taxi-service',
+  '/madurai-airport-taxi',
+  '/madurai-tour-packages',
+  '/madurai-to-rameswaram-taxi',
+  '/madurai-to-kodaikanal-taxi',
+  '/tempo-traveller-rental-madurai'
 ];
 
 // Define static SEO metadata for each route
 const routeMetadata = {
   '/': {
-    title: 'Madurai Best Tours and Travels | Taxi Service, Cab Booking & Tour Packages',
+    title: 'Madurai Best Tours and Travels - Best Taxi Service & Tour Packages in Madurai',
     description: 'Madurai Best Tours and Travels provides taxi services, airport pickup and drop, local sightseeing, outstation cab booking, tempo traveller rental and customized South India tour packages.'
   },
   '/about': {
@@ -56,6 +62,30 @@ const routeMetadata = {
   '/terms-and-conditions': {
     title: 'Terms & Conditions | Madurai Best Tours and Travels',
     description: 'Review the terms and conditions for booking taxis, cabs, and tour packages with Madurai Best Tours and Travels.'
+  },
+  '/madurai-taxi-service': {
+    title: 'Madurai Taxi Service & Cab Booking | Best Tours and Travels',
+    description: 'Book reliable and affordable Madurai taxi service for local sightseeing, outstation drops, and airport transfers with premium vehicles.'
+  },
+  '/madurai-airport-taxi': {
+    title: 'Madurai Airport Taxi & Transfers | 24/7 Pickup & Drop',
+    description: 'Pre-book your Madurai Airport taxi for punctual, 24/7 pickup and drop services. Avoid waiting with our premium airport cab service.'
+  },
+  '/madurai-tour-packages': {
+    title: 'Best Madurai Tour Packages | Local Sightseeing & Temples',
+    description: 'Customized Madurai tour packages covering Meenakshi Temple, Rameswaram, Kodaikanal, and all major South Indian destinations.'
+  },
+  '/madurai-to-rameswaram-taxi': {
+    title: 'Madurai to Rameswaram Taxi & Cabs | Affordable Fares',
+    description: 'Book a safe and comfortable Madurai to Rameswaram taxi. We offer affordable one-way drops and comprehensive round-trip packages.'
+  },
+  '/madurai-to-kodaikanal-taxi': {
+    title: 'Madurai to Kodaikanal Taxi Service | Safe Ghat Drivers',
+    description: 'Enjoy a scenic drive with our Madurai to Kodaikanal taxi service. Expert mountain drivers for a safe journey to the hill station.'
+  },
+  '/tempo-traveller-rental-madurai': {
+    title: 'Tempo Traveller Rental in Madurai | 12 to 18 Seater',
+    description: 'Book spacious 12, 14, and 18-seater Tempo Travellers or premium Force Urbanias in Madurai for comfortable group and family travel.'
   }
 };
 
