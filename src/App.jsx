@@ -29,7 +29,7 @@ const AppContent = () => {
   // Dynamic Route-Based Metadata (SEO) for client-side navigation
   useEffect(() => {
     const routeTitles = {
-      '/': 'Madurai Best Tours and Travels | Taxi Service, Cab Booking & Tour Packages',
+      '/': 'Madurai Best Tours and Travels | Madurai Best Travels | Madurai Best Tours',
       '/about': 'About Us | Madurai Best Tours and Travels | South India Taxi',
       '/vehicles': 'Our Premium Fleet - Cabs & Tempo Travellers | Madurai Best Tours',
       '/packages': 'South India Tour Packages | Madurai Best Tours and Travels',
@@ -46,8 +46,8 @@ const AppContent = () => {
     };
 
     const routeDescriptions = {
-      '/': 'Madurai Best Tours and Travels provides taxi services, airport pickup and drop, local sightseeing, outstation cab booking, tempo traveller rental and customized South India tour packages.',
-      '/about': 'Learn more about Madurai Best Tours and Travels. We are your trusted travel partner in South India since 2015, providing premium taxi services, outstation cabs, and custom tours.',
+      '/': 'Madurai Best Tours and Travels (also known as Madurai Best Travels or Madurai Best Tours) provides taxi services, airport pickup and drop, local sightseeing, outstation cab booking, tempo traveller rental and customized South India tour packages.',
+      '/about': 'Learn more about Madurai Best Tours and Travels (known also as Madurai Best Travels and Madurai Best Tours). We are your trusted travel partner in South India since 2015, providing premium taxi services, outstation cabs, and custom tours.',
       '/vehicles': 'Choose from our wide range of well-maintained vehicles including Swift Dzire, Innova Crysta, Tempo Traveller, and Urbania for a comfortable ride in Madurai.',
       '/packages': 'Book customized tour packages for Madurai local sightseeing, Rameswaram, Kodaikanal, Ooty, Munnar, Kanyakumari, and Cochin with expert guides.',
       '/gallery': 'View glimpses of beautiful destinations, happy moments, and tour experiences with our travelers across South India.',

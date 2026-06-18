@@ -380,7 +380,7 @@ const Home = () => {
                   className="w-11/12 md:w-5/6 lg:w-3/4 max-w-md md:max-w-lg lg:max-w-xl xl:max-w-2xl object-contain drop-shadow-2xl rounded-3xl"
                 />
                 <h1 className="sr-only">
-                  Madurai Best Tours and Travels
+                  Madurai Best Tours and Travels | Madurai Best Travels | Madurai Best Tours
                 </h1>
               </div>
             </motion.div>
@@ -1132,7 +1132,7 @@ const Home = () => {
 
           <div className="prose prose-sm max-w-none text-gray-600 space-y-6 leading-relaxed font-outfit">
             <p>
-              Welcome to <strong>Madurai Best Tours and Travels</strong>, your premier travel partner and most trusted taxi service provider in South India. Based in the ancient temple city of Madurai, Tamil Nadu, we specialize in offering high-quality, safe, and highly reliable transportation solutions. Whether you require a local taxi service, outstation cab booking, airport transfers, or customized travel packages to cover popular tourist hotspots, our professional crew is dedicated to ensuring you travel in absolute comfort and safety.
+              Welcome to <strong>Madurai Best Tours and Travels</strong> (also known as <strong>Madurai Best Travels</strong> or <strong>Madurai Best Tours</strong>), your premier travel partner and most trusted taxi service provider in South India. Based in the ancient temple city of Madurai, Tamil Nadu, we specialize in offering high-quality, safe, and highly reliable transportation solutions. Whether you require a local taxi service, outstation cab booking, airport transfers, or customized travel packages to cover popular tourist hotspots, our professional crew is dedicated to ensuring you travel in absolute comfort and safety.
             </p>
 
             <div className="grid md:grid-cols-2 gap-8 pt-4">

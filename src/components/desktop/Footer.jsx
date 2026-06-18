@@ -81,9 +81,9 @@ const Footer = () => {
                 <Phone className="w-3.5 h-3.5 text-[#f5c842]" />
                 +91 63825 13075
               </a>
-              <a href="mailto:maduraibesttoursandtravels@gmail.com" className="flex items-center gap-2 text-xs text-white/80 hover:text-[#f5c842] transition-colors">
+              <a href="mailto:maduraibesttoursandtravels01@gmail.com" className="flex items-center gap-2 text-xs text-white/80 hover:text-[#f5c842] transition-colors">
                 <Mail className="w-3.5 h-3.5 text-[#f5c842]" />
-                maduraibesttoursandtravels@gmail.com
+                maduraibesttoursandtravels01@gmail.com
               </a>
             </div>
 
@@ -94,6 +94,7 @@ const Footer = () => {
                 { href: 'tel:+916382513075', icon: <PhoneIcon />, hover: 'hover:bg-emerald-600', label: 'Call' },
                 { href: 'https://www.instagram.com/maduraibesttourstravels?utm_source=qr&igsh=dXUzYjVpaXd3NTB6', icon: <InstagramIcon />, hover: 'hover:bg-pink-500', label: 'Instagram' },
                 { href: 'https://wa.me/916382513075', icon: <WhatsAppIcon />, hover: 'hover:bg-green-500', label: 'WhatsApp' },
+                { href: 'https://www.google.com/maps?q=MADURAI+Best+Tours+%26+Travels', icon: <MapPin className="w-5 h-5" />, hover: 'hover:bg-red-500', label: 'Google Maps' },
               ].map((s, i) => (
                 <a
                   key={i}
@@ -184,7 +185,15 @@ const Footer = () => {
         {/* Bottom Bar */}
         <div className="border-t border-white/10 pt-8 mt-8">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-white/50">
-            <p>© 2026 Madurai Best Tours and Travels. All rights reserved.</p>
+            <div className="flex flex-col sm:flex-row items-center gap-2 sm:gap-4 text-center sm:text-left">
+              <p>© 2026 Madurai Best Tours and Travels. All rights reserved.</p>
+              <div className="flex items-center gap-2">
+                <span className="hidden sm:inline text-white/20">|</span>
+                <Link to="/privacy-policy" className="hover:text-[#f5c842] transition-colors">{t('Privacy Policy')}</Link>
+                <span className="text-white/20">|</span>
+                <Link to="/terms-and-conditions" className="hover:text-[#f5c842] transition-colors">{t('Terms & Conditions')}</Link>
+              </div>
+            </div>
             <p className="flex items-center gap-2 text-sm">
               <span className="text-white/60">Developed by</span>
               <a href="#" className="flex items-center gap-2 hover:opacity-80 transition-opacity">

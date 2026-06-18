@@ -78,7 +78,7 @@ const About = () => {
             About <span className="text-[#f5c842]">Us</span>
           </h1>
           <p className="text-lg text-white/75 max-w-xl mx-auto leading-relaxed">
-            {t('Madurai Best Tours and Travels is a trusted taxi service provider in Madurai and your reliable travel partner in South India since 2015.')}
+            {t('Madurai Best Tours and Travels (also known as Madurai Best Travels or Madurai Best Tours) is a trusted taxi service provider in Madurai and your reliable travel partner in South India since 2015.')}
           </p>
         </motion.div>
       </section>

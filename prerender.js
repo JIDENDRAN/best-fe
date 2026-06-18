@@ -32,12 +32,12 @@ const routes = [
 // Define static SEO metadata for each route
 const routeMetadata = {
   '/': {
-    title: 'Madurai Best Tours and Travels | Taxi Service & Tour Packages',
-    description: 'Madurai Best Tours and Travels provides Madurai taxi service, airport taxi, outstation cabs and tour packages.'
+    title: 'Madurai Best Tours and Travels | Madurai Best Travels | Madurai Best Tours',
+    description: 'Madurai Best Tours and Travels (also known as Madurai Best Travels or Madurai Best Tours) provides premium Madurai taxi service, airport taxi, outstation cabs and tour packages.'
   },
   '/about': {
     title: 'About Us | Madurai Best Tours and Travels | South India Taxi',
-    description: 'Learn more about Madurai Best Tours and Travels. We are your trusted travel partner in South India since 2015, providing premium taxi services, outstation cabs, and custom tours.'
+    description: 'Learn more about Madurai Best Tours and Travels (known also as Madurai Best Travels and Madurai Best Tours). We are your trusted travel partner in South India since 2015, providing premium taxi services, outstation cabs, and custom tours.'
   },
   '/vehicles': {
     title: 'Our Premium Fleet - Cabs & Tempo Travellers | Madurai Best Tours',

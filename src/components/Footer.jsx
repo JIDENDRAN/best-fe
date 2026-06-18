@@ -1,6 +1,7 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Phone, Mail, MapPin } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 const FacebookIcon = ({ className }) => (
   <svg className={className} fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
@@ -33,9 +34,9 @@ const Footer = () => {
                 <Phone className="w-4 h-4 text-yellow-500" />
                 +91 63825 13075
               </a>
-              <a href="mailto:maduraibesttoursandtravels@gmail.com" className="flex items-center gap-2 text-sm hover:text-yellow-500 transition-colors">
+              <a href="mailto:maduraibesttoursandtravels01@gmail.com" className="flex items-center gap-2 text-sm hover:text-yellow-500 transition-colors">
                 <Mail className="w-4 h-4 text-yellow-500" />
-                maduraibesttoursandtravels@gmail.com
+                maduraibesttoursandtravels01@gmail.com
               </a>
             </div>
             <div className="flex space-x-4">
@@ -85,7 +86,7 @@ const Footer = () => {
               </li>
               <li className="flex items-start gap-3">
                 <Mail className="w-5 h-5 text-yellow-500 shrink-0 mt-0.5" />
-                <span className="text-sm">maduraibesttoursandtravels@gmail.com</span>
+                <span className="text-sm">maduraibesttoursandtravels01@gmail.com</span>
               </li>
               <li className="flex items-start gap-3">
                 <MapPin className="w-5 h-5 text-yellow-500 shrink-0 mt-0.5" />
@@ -102,9 +103,9 @@ const Footer = () => {
             © 2026 Madurai Best Tours and Travels. All Rights Reserved.
           </p>
           <div className="flex space-x-4 text-sm text-slate-300">
-            <a href="/privacy-policy" className="hover:text-white transition-colors">{t('Privacy Policy')}</a>
+            <Link to="/privacy-policy" className="hover:text-white transition-colors">{t('Privacy Policy')}</Link>
             <span>|</span>
-            <a href="/terms-and-conditions" className="hover:text-white transition-colors">{t('Terms & Conditions')}</a>
+            <Link to="/terms-and-conditions" className="hover:text-white transition-colors">{t('Terms & Conditions')}</Link>
           </div>
         </div>
       </div>

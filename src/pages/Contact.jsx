@@ -133,7 +133,11 @@ const Contact = () => {
                   </div>
                   <div>
                     <h4 className="font-bold text-[#d4951e] mb-1">Address</h4>
-                    <p className="text-white/80 text-sm leading-relaxed">Madurai Best Tours & Travels<br/>Madurai, Tamil Nadu</p>
+                    <p className="text-white/80 text-sm leading-relaxed">
+                      154/155 Krishna Nagar, Sakkudi Bus Stop,<br/>
+                      Manalur Post, Manalur, Sivaganga District,<br/>
+                      Tamil Nadu 630611
+                    </p>
                   </div>
                 </div>
 
@@ -143,7 +147,9 @@ const Contact = () => {
                   </div>
                   <div>
                     <h4 className="font-bold text-[#d4951e] mb-1">Phone</h4>
-                    <p className="text-white/80 text-sm">+91 12345 67890</p>
+                    <p className="text-white/80 text-sm">
+                      <a href="tel:+916382513075" className="hover:text-[#f5c842] transition-colors">+91 63825 13075</a>
+                    </p>
                   </div>
                 </div>
 
@@ -153,7 +159,9 @@ const Contact = () => {
                   </div>
                   <div>
                     <h4 className="font-bold text-[#d4951e] mb-1">WhatsApp</h4>
-                    <p className="text-white/80 text-sm">+91 98765 43210</p>
+                    <p className="text-white/80 text-sm">
+                      <a href="https://wa.me/916382513075" target="_blank" rel="noreferrer" className="hover:text-[#f5c842] transition-colors">+91 63825 13075</a>
+                    </p>
                   </div>
                 </div>
 
@@ -163,7 +171,9 @@ const Contact = () => {
                   </div>
                   <div>
                     <h4 className="font-bold text-[#d4951e] mb-1">Email</h4>
-                    <p className="text-white/80 text-sm">info@maduraitours.com</p>
+                    <p className="text-white/80 text-sm">
+                      <a href="mailto:maduraibesttoursandtravels01@gmail.com" className="hover:text-[#f5c842] transition-colors">maduraibesttoursandtravels01@gmail.com</a>
+                    </p>
                   </div>
                 </div>
 
