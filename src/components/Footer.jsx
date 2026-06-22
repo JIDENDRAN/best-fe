@@ -90,7 +90,7 @@ const Footer = () => {
               </li>
               <li className="flex items-start gap-3">
                 <MapPin className="w-5 h-5 text-yellow-500 shrink-0 mt-0.5" />
-                <span className="text-sm">154/155 Krishna Nagar, Sakkudi Bus Stop, Manalur Post, Manalur, Sivaganga District, Tamil Nadu 630611</span>
+                <span className="text-sm">154/155 Krishna Nagar, Sakkudi Bus Stop, Manalur Post, Manalur, Madurai, Tamil Nadu 630611</span>
               </li>
             </ul>
           </div>

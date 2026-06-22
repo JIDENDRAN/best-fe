@@ -1135,73 +1135,80 @@ const Home = () => {
               Welcome to <strong>Madurai Best Tours and Travels</strong> (also known as <strong>Madurai Best Travels</strong> or <strong>Madurai Best Tours</strong>), your premier travel partner and most trusted taxi service provider in South India. Based in the ancient temple city of Madurai, Tamil Nadu, we specialize in offering high-quality, safe, and highly reliable transportation solutions. Whether you require a local taxi service, outstation cab booking, airport transfers, or customized travel packages to cover popular tourist hotspots, our professional crew is dedicated to ensuring you travel in absolute comfort and safety.
             </p>
 
-            <div className="grid md:grid-cols-2 gap-8 pt-4">
-              <div>
-                <h3 className="text-lg font-poppins font-bold text-[#0f2420] mb-2">
-                  Premium Taxi Services & Cab Bookings in Madurai
-                </h3>
-                <p>
-                  Getting around Madurai and its neighboring cities has never been easier. We offer an array of taxi options tailored to your needs. For local city commutes, our <strong>local sightseeing taxi</strong> is perfect for exploring historical monuments like the world-renowned Meenakshi Amman Temple and Thirumalai Nayakar Palace. If you are looking to visit locations outside the city limits, our <strong>outstation cab booking</strong> services provide seamless long-distance transport with options for one-way drops or round-trip journeys.
-                </p>
-                <p className="mt-2">
-                  Additionally, we provide dedicated <strong>Madurai airport taxi services</strong>, offering punctual pick-ups and drops to ensure you never miss a flight. From corporate professionals requiring executive travel to families heading out on pilgrimage, our cabs are clean, fully air-conditioned, and backed by 24/7 client support.
-                </p>
-              </div>
-
-              <div>
-                <h3 className="text-lg font-poppins font-bold text-[#0f2420] mb-2">
-                  Diverse Fleet Options: Cabs to Large Tempo Travellers
-                </h3>
-                <p>
-                  To accommodate group sizes of all numbers, we maintain a fleet of modern, well-maintained vehicles. For solo travelers, couples, or small groups of up to four, our sedan and hatchback models—such as the swift <strong>Swift Dzire</strong>—provide a compact and budget-friendly ride. For larger families seeking extra comfort and luggage space, the premium <strong>Toyota Innova</strong> and <strong>Innova Crysta</strong> are the vehicles of choice, offering smooth suspension and executive seating.
-                </p>
-                <p className="mt-2">
-                  For tourist groups, corporate teams, or extended family retreats, we offer spacious multi-seater options. Renting a <strong>Tempo Traveller in Madurai</strong> (available in 12-seater and 18-seater configurations) ensures everyone travels together comfortably. For premium luxury group travel, our state-of-the-art <strong>Force Urbania</strong> coaches provide top-tier comfort with reclining seats and generous headroom.
-                </p>
-              </div>
+            <div className="pt-4">
+              <h2 className="text-xl lg:text-2xl font-poppins font-black text-[#0f2420] mb-3">
+                Madurai Taxi Service
+              </h2>
+              <p>
+                When it comes to getting around the historic temple city, our <strong>Madurai Taxi Service</strong> is second to none. We offer convenient 24/7 call taxi services in Madurai, catering to locals and tourists alike. Our fleet of clean, air-conditioned vehicles is always ready for local sightseeing, shopping trips, or business commutes. We also specialize in reliable <strong>Madurai airport pickup and drop</strong> services, ensuring you arrive on time for your flight or get picked up promptly upon landing. With real-time tracking, transparent fares, and professional drivers, our airport cab service eliminates all travel stress.
+              </p>
             </div>
 
-            <div className="pt-6">
-              <h3 className="text-lg font-poppins font-bold text-[#0f2420] mb-3">
-                Specially Curated South India Tour Packages
-              </h3>
+            <div className="pt-4">
+              <h2 className="text-xl lg:text-2xl font-poppins font-black text-[#0f2420] mb-3">
+                Madurai Tour Packages
+              </h2>
               <p>
-                South India is rich with culture, heritage, architectural marvels, and breathtaking natural beauty. At Madurai Best Tours and Travels, we design customized itineraries that bring you closer to these iconic destinations:
+                Discover the rich heritage and scenic beauty of South India with our specially curated <strong>Madurai Tour Packages</strong>. We organize comprehensive local temple tours covering the majestic Meenakshi Amman Temple, Thirumalai Nayakkar Mahal, Gandhi Memorial Museum, and Alagar Koyil. If you wish to travel further, we offer highly popular outstation tour packages:
               </p>
               <ul className="list-disc list-inside space-y-2 mt-3 ml-4">
                 <li>
-                  <strong>Madurai Local Tour:</strong> Immerse yourself in the spiritual vibe of Madurai. Visit the monumental Meenakshi Temple, Gandhi Museum, and witness the architectural beauty of Thirumalai Nayak Palace.
+                  <strong>Rameswaram Tour Packages:</strong> A spiritual pilgrimage from Madurai to Rameswaram, Dhanushkodi, and APJ Abdul Kalam Memorial.
                 </li>
                 <li>
-                  <strong>Spiritual Pilgrimage (Madurai to Rameswaram & Kanyakumari):</strong> Journey to the sacred island of Rameswaram, explore Dhanushkodi, and travel to the southern tip of India at Kanyakumari, where three oceans meet.
+                  <strong>Kodaikanal Tours:</strong> Escape to the "Princess of Hill Stations" to enjoy Kodaikanal Lake, Bryant Park, Coaker's Walk, and Pillar Rocks.
                 </li>
                 <li>
-                  <strong>Hill Station Retreats (Kodaikanal & Ooty):</strong> Escape the heat of the plains with a custom trip to the lush green hills, lakes, and viewpoints of Kodaikanal or Ooty.
+                  <strong>Ooty Tours:</strong> Explore the beautiful tea gardens, botanical gardens, and scenic Nilgiri mountain rails in Ooty.
                 </li>
                 <li>
-                  <strong>Nature & Backwater Tours (Munnar & Kerala):</strong> Explore the rolling tea gardens of Munnar, go on houseboats in Alleppey, and discover the wildlife sanctuaries of Kerala.
+                  <strong>Custom South India Holiday Packages:</strong> Tailor-made itineraries covering Munnar, Kanyakumari, Cochin, and Alleppey backwaters.
                 </li>
               </ul>
             </div>
 
-            <div className="grid md:grid-cols-2 gap-8 pt-6">
-              <div>
-                <h3 className="text-lg font-poppins font-bold text-[#0f2420] mb-2">
-                  Expert Local Drivers at Your Service
-                </h3>
-                <p>
-                  We believe that the quality of your driver defines the quality of your trip. That is why all of our drivers are highly experienced, background-verified, and exceptionally polite. Being locals of South India, they possess deep knowledge of all routes, shortcuts, and sightseeing spots, doubling as friendly guides. Furthermore, they are trained in safe, defensive driving techniques, ensuring a secure and stress-free journey for your family.
-                </p>
-              </div>
+            <div className="pt-4">
+              <h2 className="text-xl lg:text-2xl font-poppins font-black text-[#0f2420] mb-3">
+                Tempo Traveller Rental in Madurai
+              </h2>
+              <p>
+                Traveling in a group? We offer premium <strong>Tempo Traveller Rental in Madurai</strong>, perfect for family reunions, pilgrimages, corporate trips, or friendly getaways. Our fleet features luxury, well-maintained Tempo Travellers available in various configurations, including <strong>9 Seater, 12 Seater, 14 Seater, and 17 Seater</strong> options. Equipped with push-back seats, ample luggage space, high-quality audio systems, and powerful air conditioning, our vehicles make group travel comfortable and enjoyable. For ultimate luxury, we also offer the premium Force Urbania rentals.
+              </p>
+            </div>
 
-              <div>
-                <h3 className="text-lg font-poppins font-bold text-[#0f2420] mb-2">
-                  Transparent Pricing & No Hidden Charges
-                </h3>
-                <p>
-                  We are committed to building long-term trust with our travelers. Our billing system is completely transparent with no hidden commissions, extra driver fees, or surprise costs. We offer flexible rental plans, including per-kilometer outstation rates and all-inclusive daily rental packages. What we quote is exactly what you pay, ensuring peace of mind throughout your entire travel experience.
-                </p>
-              </div>
+            <div className="pt-4">
+              <h2 className="text-xl lg:text-2xl font-poppins font-black text-[#0f2420] mb-3">
+                Outstation Cab Service
+              </h2>
+              <p>
+                Planning a trip outside Madurai? Our premier <strong>Outstation Cab Service</strong> offers safe, affordable, and dependable round-trip and one-way drops across South India. Whether you are traveling from Madurai to Chennai, Bangalore, Coimbatore, Trichy, or any major destination, we ensure a smooth ride. Our outstation cabs are driven by experienced highway drivers who are well-versed with routes, ghat roads, and local guidelines. Enjoy custom stopovers, scenic routes, and total peace of mind with our outstation travel services.
+              </p>
+            </div>
+
+            <div className="pt-4">
+              <h2 className="text-xl lg:text-2xl font-poppins font-black text-[#0f2420] mb-3">
+                Why Choose Us
+              </h2>
+              <p>
+                At Madurai Best Tours and Travels, customer satisfaction is our top priority. Here are the core benefits you receive when booking with us:
+              </p>
+              <ul className="list-disc list-inside space-y-2 mt-3 ml-4">
+                <li>
+                  <strong>Consistent NAP & Business Transparency:</strong> We operate with full integrity, offering identical billing, clear phone support (+91 63825 13075), and an easy booking experience.
+                </li>
+                <li>
+                  <strong>Safe & Experienced Ghat Drivers:</strong> Our drivers are specially trained for challenging mountain drives to hill stations like Kodaikanal, Ooty, and Munnar.
+                </li>
+                <li>
+                  <strong>Flexible Daily Rental & Per-KM Plans:</strong> Choose between cost-efficient per-kilometer rates for outstation trips or convenient fixed daily rental packages.
+                </li>
+                <li>
+                  <strong>Clean and Sanitized Vehicles:</strong> Every vehicle in our fleet—from Swift Dzire to Innova Crysta and Tempo Travellers—is thoroughly cleaned and sanitized before every journey.
+                </li>
+                <li>
+                  <strong>No Hidden Charges:</strong> Enjoy fully transparent bills. Tolls, parking, and driver allowances are discussed upfront so you have no surprises.
+                </li>
+              </ul>
             </div>
 
             <p className="pt-4 text-center font-semibold text-[#d4951e]">

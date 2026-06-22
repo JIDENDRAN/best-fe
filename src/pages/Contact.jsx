@@ -135,7 +135,7 @@ const Contact = () => {
                     <h4 className="font-bold text-[#d4951e] mb-1">Address</h4>
                     <p className="text-white/80 text-sm leading-relaxed">
                       154/155 Krishna Nagar, Sakkudi Bus Stop,<br/>
-                      Manalur Post, Manalur, Sivaganga District,<br/>
+                      Manalur Post, Manalur, Madurai,<br/>
                       Tamil Nadu 630611
                     </p>
                   </div>
