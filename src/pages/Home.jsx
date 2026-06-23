@@ -379,9 +379,6 @@ const Home = () => {
                   alt="Madurai Best Tours and Travels"
                   className="w-11/12 md:w-5/6 lg:w-3/4 max-w-md md:max-w-lg lg:max-w-xl xl:max-w-2xl object-contain drop-shadow-2xl rounded-3xl"
                 />
-                <h1 className="sr-only">
-                  Madurai Best Tours and Travels | Madurai Best Travels | Madurai Best Tours
-                </h1>
               </div>
             </motion.div>
 
@@ -596,8 +593,29 @@ const Home = () => {
         </div>
       </section>
 
+      {/* ── SEO INTRODUCTION SECTION ────────────────────── */}
+      <section className="py-12 bg-white pb-6">
+        <div className="max-w-7xl mx-auto px-4 lg:px-6">
+          <div className="bg-[#fbfbf9] border border-[#edeae1] rounded-3xl p-8 lg:p-12 shadow-sm text-center">
+            <h1 className="text-3xl lg:text-4xl font-poppins font-black text-[#0f2420] mb-4">
+              Madurai Best Tours and Travels
+            </h1>
+            <div className="h-1 bg-[#d4951e] w-24 mx-auto rounded-full mb-6" />
+            <h2 className="text-xl lg:text-2xl font-poppins font-bold text-[#0f2420] mb-4">
+              Madurai Best Tours and Travels – Taxi and Tour Services
+            </h2>
+            <p className="text-gray-600 max-w-3xl mx-auto leading-relaxed text-sm md:text-base">
+              Madurai Best Tours and Travels is a trusted travel agency in Madurai offering
+              local taxi booking, airport pickup and drop, Tempo Traveller rental,
+              Madurai sightseeing tours, Madurai to Rameswaram taxi service, Kodaikanal
+              cab booking and South India holiday packages.
+            </p>
+          </div>
+        </div>
+      </section>
+
       {/* ── SEO SECTION: WHY CHOOSE US ────────────────────── */}
-      <section className="py-12 bg-white">
+      <section className="pt-6 pb-12 bg-white">
         <div className="max-w-7xl mx-auto px-4 lg:px-6">
           <div className="bg-[#fbfbf9] border border-[#edeae1] rounded-3xl p-8 lg:p-12 shadow-sm text-center">
             <h2 className="text-2xl lg:text-3xl font-poppins font-bold text-[#0f2420] mb-4">
