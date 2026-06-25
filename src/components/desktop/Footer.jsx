@@ -94,7 +94,7 @@ const Footer = () => {
                 { href: 'tel:+916382513075', icon: <PhoneIcon />, hover: 'hover:bg-emerald-600', label: 'Call' },
                 { href: 'https://www.instagram.com/maduraibesttourstravels?utm_source=qr&igsh=dXUzYjVpaXd3NTB6', icon: <InstagramIcon />, hover: 'hover:bg-pink-500', label: 'Instagram' },
                 { href: 'https://wa.me/916382513075', icon: <WhatsAppIcon />, hover: 'hover:bg-green-500', label: 'WhatsApp' },
-                { href: 'https://www.google.com/maps?q=MADURAI+Best+Tours+%26+Travels', icon: <MapPin className="w-5 h-5" />, hover: 'hover:bg-red-500', label: 'Google Maps' },
+                { href: 'https://share.google/Fm3EQJUUHcn7X1uRe', icon: <MapPin className="w-5 h-5" />, hover: 'hover:bg-red-500', label: 'Google Maps' },
               ].map((s, i) => (
                 <a
                   key={i}
