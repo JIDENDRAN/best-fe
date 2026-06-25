@@ -76,7 +76,7 @@ const Navbar = () => {
                   <span>MADURAI</span>
                   <span>BEST</span>
                 </div>
-                <span className="font-poppins font-semibold text-xs text-white/90 tracking-widest uppercase leading-none">TOURS & TRAVELS</span>
+                <span className="font-poppins font-semibold text-xs text-white/90 tracking-widest uppercase leading-none">TOURS AND TRAVELS</span>
               </div>
             </Link>
 

@@ -68,7 +68,7 @@ const Navbar = () => {
                               <img src={Logo} alt="Madurai Best Tours and Travels" className="h-12 w-auto object-contain drop-shadow-[0_0_15px_rgba(250,204,21,0.4)] group-hover:scale-105 transition-transform duration-300" />
               <div className="flex flex-col hidden sm:flex">
                 <span className="font-poppins font-black text-xl leading-none bg-gradient-to-r from-yellow-500 via-amber-500 to-yellow-600 bg-clip-text text-transparent drop-shadow-[0_1px_3px_rgba(250,204,21,0.2)]">MADURAI</span>
-                <span className="font-poppins font-bold text-lg leading-none text-slate-850 group-hover:text-yellow-600 transition-colors">TOURS & TRAVELS</span>
+                <span className="font-poppins font-bold text-lg leading-none text-slate-850 group-hover:text-yellow-600 transition-colors">TOURS AND TRAVELS</span>
               </div>
             </Link>
           </div>

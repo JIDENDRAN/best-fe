@@ -68,7 +68,7 @@ const Footer = () => {
               </div>
               <div>
                 <div className="font-poppins font-black text-[#f5c842] leading-tight text-lg">MADURAI</div>
-                <div className="text-white/70 text-[10px] font-bold tracking-widest uppercase">Best Tours & Travels</div>
+                <div className="text-white/70 text-[10px] font-bold tracking-widest uppercase">Best Tours and Travels</div>
               </div>
             </div>
 
