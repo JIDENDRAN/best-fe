@@ -606,9 +606,8 @@ const Home = () => {
             </h2>
             <p className="text-gray-600 max-w-3xl mx-auto leading-relaxed text-sm md:text-base">
               Madurai Best Tours and Travels is a trusted travel agency in Madurai offering
-              local taxi booking, airport pickup and drop, Tempo Traveller rental,
-              Madurai sightseeing tours, Madurai to Rameswaram taxi service, Kodaikanal
-              cab booking and South India holiday packages.
+              local <a href="/madurai-taxi-service" className="text-[#d4951e] hover:underline font-semibold">taxi booking</a>, <a href="/madurai-airport-taxi" className="text-[#d4951e] hover:underline font-semibold">airport pickup and drop</a>, <a href="/tempo-traveller-rental-madurai" className="text-[#d4951e] hover:underline font-semibold">Tempo Traveller rental</a>,
+              Madurai sightseeing tours, <a href="/madurai-to-rameswaram-taxi" className="text-[#d4951e] hover:underline font-semibold">Madurai to Rameswaram taxi service</a>, <a href="/madurai-to-kodaikanal-taxi" className="text-[#d4951e] hover:underline font-semibold">Kodaikanal cab booking</a> and <a href="/madurai-tour-packages" className="text-[#d4951e] hover:underline font-semibold">South India holiday packages</a>.
             </p>
           </div>
         </div>
@@ -622,7 +621,7 @@ const Home = () => {
               Why Choose Madurai Best Tours and Travels?
             </h2>
             <p className="text-gray-600 max-w-3xl mx-auto leading-relaxed text-sm md:text-base">
-              <strong>Madurai Best Tours and Travels</strong> offers <a href="/madurai-taxi-service" className="text-[#d4951e] hover:underline font-semibold">Madurai Best Tours and Travels Taxi Service</a>, airport transfers, tempo traveller rentals, local sightseeing and South India tour packages. We guarantee the best rates, well-maintained vehicles, and professional drivers to ensure your journey is safe and comfortable.
+              <strong>Madurai Best Tours and Travels</strong> offers <a href="/madurai-taxi-service" className="text-[#d4951e] hover:underline font-semibold">Madurai Best Tours and Travels Taxi Service</a>, <a href="/madurai-airport-taxi" className="text-[#d4951e] hover:underline font-semibold">airport transfers</a>, <a href="/tempo-traveller-rental-madurai" className="text-[#d4951e] hover:underline font-semibold">tempo traveller rentals</a>, local sightseeing and <a href="/madurai-tour-packages" className="text-[#d4951e] hover:underline font-semibold">South India tour packages</a>. We guarantee the best rates, well-maintained vehicles, and professional drivers to ensure your journey is safe and comfortable.
             </p>
           </div>
         </div>
