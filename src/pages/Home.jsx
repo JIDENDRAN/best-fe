@@ -1278,7 +1278,7 @@ const Home = () => {
 // FAQ Accordion Component
 const FAQAccordion = () => {
   const [openIndex, setOpenIndex] = useState(null);
-  
+
   const faqs = [
     {
       q: 'How much is a taxi from Madurai Airport?',
