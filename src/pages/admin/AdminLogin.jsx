@@ -139,14 +139,7 @@ const AdminLogin = () => {
             </button>
           </form>
 
-          {/* Helper details for the user/demo */}
-          <div className="mt-8 pt-6 border-t border-[#edeae1] flex justify-center text-xs text-gray-500 font-medium">
-            <div className="bg-[#f7f5f0] px-4 py-2 rounded-lg flex items-center gap-3">
-              <span>User: <strong className="text-[#1a3c34]">admin</strong></span>
-              <span className="w-1 h-1 bg-gray-300 rounded-full"></span>
-              <span>Pass: <strong className="text-[#1a3c34]">admin123</strong></span>
-            </div>
-          </div>
+          {/* Helper details removed for security */}
         </motion.div>
 
         <div className="text-center mt-8 text-sm text-gray-500">
