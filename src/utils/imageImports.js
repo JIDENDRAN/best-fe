@@ -3,6 +3,8 @@
 // This file provides mapping objects to resolve image names to imported modules.
 // It enables static imports while allowing dynamic lookup based on image filename.
 
+import API_BASE_URL from '../apiConfig.js';
+
 // Vehicle images
 import InnovaImg from '../assets/innova_crysta-removebg-preview.png';
 import SedanImg from '../assets/sedan_cab-removebg-preview.png';
@@ -69,6 +71,13 @@ export const packageImageMap = {
 };
 
 // Helper functions
-export const getVehicleImage = (name) => vehicleImageMap[name] || SedanImg;
-export const getBgImage = (name) => bgImageMap[name] || KanyakumariBg;
-export const getPackageImage = (name) => packageImageMap[name] || MeenakshiBg;
+const resolveImage = (name, staticMap, fallback) => {
+  if (!name) return fallback;
+  if (name.startsWith('http')) return name;
+  if (name.startsWith('/uploads/')) return `${API_BASE_URL}${name}`;
+  return staticMap[name] || fallback;
+};
+
+export const getVehicleImage = (name) => resolveImage(name, vehicleImageMap, SedanImg);
+export const getBgImage = (name) => resolveImage(name, bgImageMap, KanyakumariBg);
+export const getPackageImage = (name) => resolveImage(name, packageImageMap, MeenakshiBg);

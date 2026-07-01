@@ -23,9 +23,10 @@ import {
   Lock,
   Compass,
   Sparkles,
-  Info
+  Info,
+  Upload
 } from 'lucide-react';
-import { getVehicleImage } from '../../utils/imageImports';
+import { getVehicleImage, getPackageImage } from '../../utils/imageImports';
 import { useNavigate } from 'react-router-dom';
 import API_BASE_URL from '../../apiConfig.js';
 
@@ -45,6 +46,35 @@ const AdminDashboard = () => {
   const showToast = (message, type = 'success') => {
     setToast({ message, type });
     setTimeout(() => setToast(null), 3000);
+  };
+
+  const handleImageUpload = async (e, setModalState, fieldName) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    const formData = new FormData();
+    formData.append('image', file);
+
+    showToast('Uploading image...', 'success');
+
+    try {
+      const response = await fetch(`${API_BASE_URL}/api/upload`, {
+        method: 'POST',
+        body: formData
+      });
+      if (response.ok) {
+        const data = await response.json();
+        setModalState(prev => ({
+          ...prev,
+          data: { ...prev.data, [fieldName]: data.filePath }
+        }));
+        showToast('Image uploaded successfully!');
+      } else {
+        showToast('Image upload failed', 'error');
+      }
+    } catch (error) {
+      console.error('Upload error', error);
+      showToast('Connection error during upload', 'error');
+    }
   };
 
   // State Management
@@ -254,24 +284,64 @@ const AdminDashboard = () => {
 
   // Cars (Fleet) CRUD
   const handleOpenCarModal = (isEdit = false, data = null) => {
-    setCarModal({
-      isOpen: true,
-      isEdit,
-      data: data ? { ...data } : { name: '', seats: '4 Seater', ac: 'AC', price: '₹12/km', desc: '', image: availableCarImages[0], bgImage: availableBgs[0] }
-    });
+    let parsedData = {
+      name: '', seats: '4 Seater', ac: 'AC', price: '₹12/km', desc: '', image: availableCarImages[0], bgImage: availableBgs[0],
+      outstationRate: '', outstationMinKm: '', outstationDriver: '',
+      dayBaseRent: '', dayPerKm: '', dayDriver: ''
+    };
+    if (data) {
+      parsedData = { ...parsedData, ...data };
+      if (data.desc) {
+        const lines = data.desc.split('\n');
+        let currentSection = '';
+        lines.forEach(line => {
+          if (line.includes('[Outstation Plan]')) currentSection = 'outstation';
+          else if (line.includes('[Day Rental Plan]')) currentSection = 'day';
+          else if (line.includes(':')) {
+            const [k, v] = line.split(':');
+            const key = k.trim().toLowerCase();
+            const val = v ? v.trim() : '';
+            if (currentSection === 'outstation') {
+              if (key === 'rate') parsedData.outstationRate = val;
+              if (key === 'min distance') parsedData.outstationMinKm = val;
+              if (key === 'driver charge') parsedData.outstationDriver = val;
+            } else if (currentSection === 'day') {
+              if (key === 'base rent') parsedData.dayBaseRent = val;
+              if (key === 'per km charge') parsedData.dayPerKm = val;
+              if (key === 'driver charge') parsedData.dayDriver = val;
+            }
+          }
+        });
+      }
+    }
+    setCarModal({ isOpen: true, isEdit, data: parsedData });
   };
 
   const handleCarSubmit = async (e) => {
     e.preventDefault();
     const { isEdit, data } = carModal;
-    const url = isEdit ? `${API_BASE_URL}/api/cars/${data.id}` : `${API_BASE_URL}/api/cars`;
+
+    // Auto format the description string
+    const formattedDesc = `[Outstation Plan]
+Rate: ${data.outstationRate || ''}
+Min Distance: ${data.outstationMinKm || ''}
+Driver Charge: ${data.outstationDriver || ''}
+
+[Day Rental Plan]
+Base Rent: ${data.dayBaseRent || ''}
+Per km Charge: ${data.dayPerKm || ''}
+Driver Charge: ${data.dayDriver || ''}`;
+
+    const submissionData = { ...data, desc: formattedDesc };
+
+    const url = isEdit ? `${API_BASE_URL}/api/cars/${submissionData.id}` : `${API_BASE_URL}/api/cars`;
     const method = isEdit ? 'PUT' : 'POST';
 
     try {
       const response = await fetch(url, {
         method,
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data)
+        body: JSON.stringify(submissionData)
       });
       if (response.ok) {
         showToast(isEdit ? 'Vehicle updated successfully.' : 'Vehicle added successfully.');
@@ -451,6 +521,28 @@ const AdminDashboard = () => {
 
             <li>
               <button
+                onClick={() => setActiveTab('cars')}
+                className={`w-full flex items-center gap-3 px-4 py-3.5 rounded-xl transition-all font-medium ${activeTab === 'cars'
+                  ? 'bg-[#d4951e] text-white font-bold shadow-md'
+                  : 'text-[#a3b8b1] hover:text-white hover:bg-[#2d5a4e]'
+                  }`}
+              >
+                <Car className="w-5 h-5" /> Manage Vehicles
+              </button>
+            </li>
+            <li>
+              <button
+                onClick={() => setActiveTab('packages')}
+                className={`w-full flex items-center gap-3 px-4 py-3.5 rounded-xl transition-all font-medium ${activeTab === 'packages'
+                  ? 'bg-[#d4951e] text-white font-bold shadow-md'
+                  : 'text-[#a3b8b1] hover:text-white hover:bg-[#2d5a4e]'
+                  }`}
+              >
+                <Package className="w-5 h-5" /> Manage Packages
+              </button>
+            </li>
+            <li>
+              <button
                 onClick={() => setActiveTab('contacts')}
                 className={`w-full flex items-center gap-3 px-4 py-3.5 rounded-xl transition-all font-medium ${activeTab === 'contacts'
                   ? 'bg-[#d4951e] text-white font-bold shadow-md'
@@ -628,6 +720,114 @@ const AdminDashboard = () => {
             )}
 
 
+
+            {/* CARS VIEW */}
+            {activeTab === 'cars' && (
+              <motion.div key="cars" initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -15 }}>
+                <div className="bg-white rounded-3xl border border-[#edeae1] shadow-[0_8px_30px_rgb(0,0,0,0.06)] overflow-hidden">
+                  <div className="p-6 border-b border-[#edeae1] flex justify-between items-center">
+                    <h2 className="text-xl font-bold text-[#1a3c34]">Fleet Management</h2>
+                    <button
+                      onClick={() => handleOpenCarModal(false)}
+                      className="bg-[#d4951e] hover:bg-[#b57a15] text-white px-4 py-2 rounded-xl flex items-center gap-2 font-bold text-sm shadow-md transition-all"
+                    >
+                      <Plus className="w-4 h-4" /> Add Vehicle
+                    </button>
+                  </div>
+                  {loading ? (
+                    <div className="flex flex-col items-center justify-center py-20 text-gray-500 font-medium">
+                      <div className="w-10 h-10 border-4 border-[#d4951e] border-t-transparent rounded-full animate-spin mb-4"></div>
+                      Loading vehicles...
+                    </div>
+                  ) : cars.length === 0 ? (
+                    <div className="flex flex-col items-center justify-center py-20 text-gray-400">
+                      <Car className="w-16 h-16 mb-4 text-gray-300" />
+                      <p className="text-lg font-bold text-gray-800">No Vehicles Found</p>
+                    </div>
+                  ) : (
+                    <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 p-6">
+                      {cars.map(car => (
+                        <div key={car.id} className="border border-[#edeae1] rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-all">
+                          <div className="h-40 bg-gray-100 relative">
+                            <img src={getVehicleImage(car.image)} alt={car.name} className="w-full h-full object-contain absolute inset-0" />
+                          </div>
+                          <div className="p-4">
+                            <h3 className="font-bold text-lg text-[#1a3c34] truncate">{car.name}</h3>
+                            <div className="flex items-center gap-2 mt-1 text-xs font-semibold text-gray-500">
+                              <span className="bg-gray-100 px-2 py-1 rounded-md">{car.seats}</span>
+                              <span className="bg-gray-100 px-2 py-1 rounded-md">{car.ac}</span>
+                              <span className="bg-gray-100 px-2 py-1 rounded-md text-[#d4951e]">{car.price}</span>
+                            </div>
+                            <div className="mt-4 flex justify-between items-center pt-3 border-t border-[#edeae1]">
+                              <button onClick={() => handleOpenCarModal(true, car)} className="text-[#1a3c34] hover:text-[#d4951e] font-bold text-sm flex items-center gap-1">
+                                <Edit className="w-4 h-4" /> Edit
+                              </button>
+                              <button onClick={() => handleDeleteCar(car.id)} className="text-red-500 hover:text-red-600 font-bold text-sm flex items-center gap-1">
+                                <Trash2 className="w-4 h-4" /> Delete
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              </motion.div>
+            )}
+
+            {/* PACKAGES VIEW */}
+            {activeTab === 'packages' && (
+              <motion.div key="packages" initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -15 }}>
+                <div className="bg-white rounded-3xl border border-[#edeae1] shadow-[0_8px_30px_rgb(0,0,0,0.06)] overflow-hidden">
+                  <div className="p-6 border-b border-[#edeae1] flex justify-between items-center">
+                    <h2 className="text-xl font-bold text-[#1a3c34]">Tour Packages</h2>
+                    <button
+                      onClick={() => handleOpenPkgModal(false)}
+                      className="bg-[#d4951e] hover:bg-[#b57a15] text-white px-4 py-2 rounded-xl flex items-center gap-2 font-bold text-sm shadow-md transition-all"
+                    >
+                      <Plus className="w-4 h-4" /> Add Package
+                    </button>
+                  </div>
+                  {loading ? (
+                    <div className="flex flex-col items-center justify-center py-20 text-gray-500 font-medium">
+                      <div className="w-10 h-10 border-4 border-[#d4951e] border-t-transparent rounded-full animate-spin mb-4"></div>
+                      Loading packages...
+                    </div>
+                  ) : packages.length === 0 ? (
+                    <div className="flex flex-col items-center justify-center py-20 text-gray-400">
+                      <Package className="w-16 h-16 mb-4 text-gray-300" />
+                      <p className="text-lg font-bold text-gray-800">No Packages Found</p>
+                    </div>
+                  ) : (
+                    <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 p-6">
+                      {packages.map(pkg => (
+                        <div key={pkg.id} className="border border-[#edeae1] rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-all flex flex-col">
+                          <div className="h-40 bg-gray-100">
+                            <img src={getPackageImage(pkg.image)} alt={pkg.name} className="w-full h-full object-cover" />
+                          </div>
+                          <div className="p-4 flex-grow flex flex-col">
+                            <h3 className="font-bold text-lg text-[#1a3c34] truncate">{pkg.name}</h3>
+                            <div className="flex justify-between items-center mt-1 text-xs font-bold">
+                              <span className="text-gray-500 flex items-center gap-1"><Clock className="w-3.5 h-3.5" /> {pkg.duration}</span>
+                              <span className="text-[#d4951e]">{pkg.price}</span>
+                            </div>
+                            <p className="text-xs text-gray-600 mt-3 line-clamp-3 flex-grow">{pkg.places}</p>
+                            <div className="mt-4 flex justify-between items-center pt-3 border-t border-[#edeae1]">
+                              <button onClick={() => handleOpenPkgModal(true, pkg)} className="text-[#1a3c34] hover:text-[#d4951e] font-bold text-sm flex items-center gap-1">
+                                <Edit className="w-4 h-4" /> Edit
+                              </button>
+                              <button onClick={() => handleDeletePackage(pkg.id)} className="text-red-500 hover:text-red-600 font-bold text-sm flex items-center gap-1">
+                                <Trash2 className="w-4 h-4" /> Delete
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              </motion.div>
+            )}
 
             {/* CONTACT MESSAGES VIEW */}
             {activeTab === 'contacts' && (
@@ -901,10 +1101,169 @@ const AdminDashboard = () => {
             )}
 
           </AnimatePresence>
+
+          {/* VEHICLE MODAL */}
+          <AnimatePresence>
+            {carModal.isOpen && (
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm"
+              >
+                <motion.div
+                  initial={{ scale: 0.95, opacity: 0 }}
+                  animate={{ scale: 1, opacity: 1 }}
+                  exit={{ scale: 0.95, opacity: 0 }}
+                  className="bg-white rounded-3xl p-6 w-full max-w-2xl shadow-2xl max-h-[90vh] overflow-y-auto"
+                >
+                  <div className="flex justify-between items-center mb-6 border-b border-[#edeae1] pb-3">
+                    <h3 className="text-xl font-bold text-[#1a3c34] font-poppins">{carModal.isEdit ? 'Edit Vehicle' : 'Add New Vehicle'}</h3>
+                    <button onClick={() => setCarModal({ isOpen: false, isEdit: false, data: null })} className="text-gray-400 hover:text-gray-600"><X className="w-6 h-6" /></button>
+                  </div>
+                  <form onSubmit={handleCarSubmit} className="space-y-4">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <div>
+                        <label className="text-xs font-bold text-gray-500 uppercase">Vehicle Name</label>
+                        <input type="text" value={carModal.data.name} onChange={e => setCarModal({ ...carModal, data: { ...carModal.data, name: e.target.value } })} className="w-full mt-1 bg-[#f7f5f0] border border-[#edeae1] p-3 rounded-xl focus:outline-none focus:border-[#d4951e]" required />
+                      </div>
+                      <div>
+                        <label className="text-xs font-bold text-gray-500 uppercase">Price String (e.g. ₹12/km)</label>
+                        <input type="text" value={carModal.data.price} onChange={e => setCarModal({ ...carModal, data: { ...carModal.data, price: e.target.value } })} className="w-full mt-1 bg-[#f7f5f0] border border-[#edeae1] p-3 rounded-xl focus:outline-none focus:border-[#d4951e]" required />
+                      </div>
+                      <div>
+                        <label className="text-xs font-bold text-gray-500 uppercase">Seats</label>
+                        <select value={carModal.data.seats} onChange={e => setCarModal({ ...carModal, data: { ...carModal.data, seats: e.target.value } })} className="w-full mt-1 bg-[#f7f5f0] border border-[#edeae1] p-3 rounded-xl focus:outline-none focus:border-[#d4951e]">
+                          <option>4 Seater</option><option>7 Seater</option><option>12 Seater</option><option>18 Seater</option>
+                        </select>
+                      </div>
+                      <div>
+                        <label className="text-xs font-bold text-gray-500 uppercase">AC / Non-AC</label>
+                        <select value={carModal.data.ac} onChange={e => setCarModal({ ...carModal, data: { ...carModal.data, ac: e.target.value } })} className="w-full mt-1 bg-[#f7f5f0] border border-[#edeae1] p-3 rounded-xl focus:outline-none focus:border-[#d4951e]">
+                          <option>AC</option><option>Non-AC</option>
+                        </select>
+                      </div>
+                      <div>
+                        <label className="text-xs font-bold text-gray-500 uppercase">Vehicle Image</label>
+                        <div className="mt-1 flex items-center gap-4">
+                          {carModal.data.image && (
+                            <img src={getVehicleImage(carModal.data.image)} alt="Preview" className="h-12 w-16 object-contain bg-white rounded-lg border border-gray-200 shadow-sm" />
+                          )}
+                          <label className="bg-[#1a3c34] hover:bg-[#2d5a4e] text-white px-4 py-2 rounded-xl cursor-pointer transition-all shadow-sm flex items-center gap-2">
+                            <Upload className="w-4 h-4" />
+                            <span className="text-sm font-bold">Upload Image</span>
+                            <input type="file" accept="image/*" className="hidden" onChange={(e) => handleImageUpload(e, setCarModal, 'image')} />
+                          </label>
+                        </div>
+                      </div>
+
+                    </div>
+                    <div className="pt-4 border-t border-[#edeae1]">
+                      <h4 className="text-sm font-bold text-[#1a3c34] mb-3 uppercase tracking-wider">Outstation Plan Details</h4>
+                      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div>
+                          <label className="text-[10px] font-bold text-gray-500 uppercase">Rate (e.g. ₹14/km)</label>
+                          <input type="text" value={carModal.data.outstationRate || ''} onChange={e => setCarModal({ ...carModal, data: { ...carModal.data, outstationRate: e.target.value } })} className="w-full mt-1 bg-[#f7f5f0] border border-[#edeae1] p-2.5 rounded-xl text-sm focus:outline-none focus:border-[#d4951e]" placeholder="Rate" />
+                        </div>
+                        <div>
+                          <label className="text-[10px] font-bold text-gray-500 uppercase">Min Distance</label>
+                          <input type="text" value={carModal.data.outstationMinKm || ''} onChange={e => setCarModal({ ...carModal, data: { ...carModal.data, outstationMinKm: e.target.value } })} className="w-full mt-1 bg-[#f7f5f0] border border-[#edeae1] p-2.5 rounded-xl text-sm focus:outline-none focus:border-[#d4951e]" placeholder="Above 250 km" />
+                        </div>
+                        <div>
+                          <label className="text-[10px] font-bold text-gray-500 uppercase">Driver Charge</label>
+                          <input type="text" value={carModal.data.outstationDriver || ''} onChange={e => setCarModal({ ...carModal, data: { ...carModal.data, outstationDriver: e.target.value } })} className="w-full mt-1 bg-[#f7f5f0] border border-[#edeae1] p-2.5 rounded-xl text-sm focus:outline-none focus:border-[#d4951e]" placeholder="₹300/day" />
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="pt-4 border-t border-[#edeae1]">
+                      <h4 className="text-sm font-bold text-[#1a3c34] mb-3 uppercase tracking-wider">Day Rental Plan Details</h4>
+                      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div>
+                          <label className="text-[10px] font-bold text-gray-500 uppercase">Base Rent</label>
+                          <input type="text" value={carModal.data.dayBaseRent || ''} onChange={e => setCarModal({ ...carModal, data: { ...carModal.data, dayBaseRent: e.target.value } })} className="w-full mt-1 bg-[#f7f5f0] border border-[#edeae1] p-2.5 rounded-xl text-sm focus:outline-none focus:border-[#d4951e]" placeholder="Rs. 2700" />
+                        </div>
+                        <div>
+                          <label className="text-[10px] font-bold text-gray-500 uppercase">Per km Charge</label>
+                          <input type="text" value={carModal.data.dayPerKm || ''} onChange={e => setCarModal({ ...carModal, data: { ...carModal.data, dayPerKm: e.target.value } })} className="w-full mt-1 bg-[#f7f5f0] border border-[#edeae1] p-2.5 rounded-xl text-sm focus:outline-none focus:border-[#d4951e]" placeholder="Rs. 17/km" />
+                        </div>
+                        <div>
+                          <label className="text-[10px] font-bold text-gray-500 uppercase">Driver Charge</label>
+                          <input type="text" value={carModal.data.dayDriver || ''} onChange={e => setCarModal({ ...carModal, data: { ...carModal.data, dayDriver: e.target.value } })} className="w-full mt-1 bg-[#f7f5f0] border border-[#edeae1] p-2.5 rounded-xl text-sm focus:outline-none focus:border-[#d4951e]" placeholder="Rs. 400/day" />
+                        </div>
+                      </div>
+                    </div>
+                    <button type="submit" className="w-full bg-[#1a3c34] text-white font-bold py-3 rounded-xl mt-4 hover:bg-[#2d5a4e] transition-all">
+                      {carModal.isEdit ? 'Save Changes' : 'Add Vehicle'}
+                    </button>
+                  </form>
+                </motion.div>
+              </motion.div>
+            )}
+          </AnimatePresence>
+
+          {/* PACKAGE MODAL */}
+          <AnimatePresence>
+            {pkgModal.isOpen && (
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm"
+              >
+                <motion.div
+                  initial={{ scale: 0.95, opacity: 0 }}
+                  animate={{ scale: 1, opacity: 1 }}
+                  exit={{ scale: 0.95, opacity: 0 }}
+                  className="bg-white rounded-3xl p-6 w-full max-w-2xl shadow-2xl max-h-[90vh] overflow-y-auto"
+                >
+                  <div className="flex justify-between items-center mb-6 border-b border-[#edeae1] pb-3">
+                    <h3 className="text-xl font-bold text-[#1a3c34] font-poppins">{pkgModal.isEdit ? 'Edit Package' : 'Add New Package'}</h3>
+                    <button onClick={() => setPkgModal({ isOpen: false, isEdit: false, data: null })} className="text-gray-400 hover:text-gray-600"><X className="w-6 h-6" /></button>
+                  </div>
+                  <form onSubmit={handlePkgSubmit} className="space-y-4">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <div>
+                        <label className="text-xs font-bold text-gray-500 uppercase">Package Name</label>
+                        <input type="text" value={pkgModal.data.name} onChange={e => setPkgModal({ ...pkgModal, data: { ...pkgModal.data, name: e.target.value } })} className="w-full mt-1 bg-[#f7f5f0] border border-[#edeae1] p-3 rounded-xl focus:outline-none focus:border-[#d4951e]" required />
+                      </div>
+                      <div>
+                        <label className="text-xs font-bold text-gray-500 uppercase">Duration & Distance</label>
+                        <input type="text" value={pkgModal.data.duration} onChange={e => setPkgModal({ ...pkgModal, data: { ...pkgModal.data, duration: e.target.value } })} className="w-full mt-1 bg-[#f7f5f0] border border-[#edeae1] p-3 rounded-xl focus:outline-none focus:border-[#d4951e]" placeholder="e.g. 12 Hours / 300 KM" required />
+                      </div>
+                      <div>
+                        <label className="text-xs font-bold text-gray-500 uppercase">Price</label>
+                        <input type="text" value={pkgModal.data.price} onChange={e => setPkgModal({ ...pkgModal, data: { ...pkgModal.data, price: e.target.value } })} className="w-full mt-1 bg-[#f7f5f0] border border-[#edeae1] p-3 rounded-xl focus:outline-none focus:border-[#d4951e]" placeholder="e.g. ₹5000" required />
+                      </div>
+                      <div>
+                        <label className="text-xs font-bold text-gray-500 uppercase">Cover Image</label>
+                        <div className="mt-1 flex items-center gap-4">
+                          {pkgModal.data.image && (
+                            <img src={getPackageImage(pkgModal.data.image)} alt="Preview" className="h-12 w-16 object-cover bg-white rounded-lg border border-gray-200 shadow-sm" />
+                          )}
+                          <label className="bg-[#1a3c34] hover:bg-[#2d5a4e] text-white px-4 py-2 rounded-xl cursor-pointer transition-all shadow-sm flex items-center gap-2">
+                            <Upload className="w-4 h-4" />
+                            <span className="text-sm font-bold">Upload Image</span>
+                            <input type="file" accept="image/*" className="hidden" onChange={(e) => handleImageUpload(e, setPkgModal, 'image')} />
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+                    <div>
+                      <label className="text-xs font-bold text-gray-500 uppercase">Places Covered (Description)</label>
+                      <textarea value={pkgModal.data.places} onChange={e => setPkgModal({ ...pkgModal, data: { ...pkgModal.data, places: e.target.value } })} className="w-full mt-1 bg-[#f7f5f0] border border-[#edeae1] p-3 rounded-xl focus:outline-none focus:border-[#d4951e] h-24" required></textarea>
+                    </div>
+                    <button type="submit" className="w-full bg-[#1a3c34] text-white font-bold py-3 rounded-xl mt-4 hover:bg-[#2d5a4e] transition-all">
+                      {pkgModal.isEdit ? 'Save Changes' : 'Add Package'}
+                    </button>
+                  </form>
+                </motion.div>
+              </motion.div>
+            )}
+          </AnimatePresence>
+
         </main>
       </div>
-
-
 
     </div>
   );

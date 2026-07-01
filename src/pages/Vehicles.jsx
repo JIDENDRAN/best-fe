@@ -16,6 +16,7 @@ const parseDesc = (descString) => {
   if (!descString) return null;
   const plans = {};
   const sections = descString.split(/\n\s*\n/);
+  let planCount = 0;
   sections.forEach(sec => {
     const lines = sec.split('\n').map(l => l.trim()).filter(Boolean);
     if (lines.length === 0) return;
@@ -25,60 +26,31 @@ const parseDesc = (descString) => {
     for (let i = 1; i < lines.length; i++) {
       const parts = lines[i].split(':');
       if (parts.length >= 2) {
-        items.push({
-          label: parts[0].trim(),
-          value: parts.slice(1).join(':').trim()
-        });
+        const label = parts[0].trim();
+        let value = parts.slice(1).join(':').trim();
+        
+        // Auto-format if they only typed numbers
+        if (/^\d+$/.test(value)) {
+          const lowerLabel = label.toLowerCase();
+          if (lowerLabel.includes('rate') || lowerLabel.includes('per km')) {
+            value = `₹${value}/km`;
+          } else if (lowerLabel.includes('min distance')) {
+            value = `Above ${value} km`;
+          } else if (lowerLabel.includes('driver')) {
+            value = `₹${value}/day`;
+          } else if (lowerLabel.includes('base rent')) {
+            value = `₹${value}`;
+          }
+        }
+
+        items.push({ label, value });
       }
     }
-    if (title.includes('OUTSTATION')) {
-      plans.outstation = { title, items };
-    } else if (title.includes('DAY RENTAL')) {
-      plans.dayRental = { title, items };
-    }
+    plans[`plan_${planCount++}`] = { title, items };
   });
   return plans;
 };
 
-// ─── Default Vehicles ─────────────────────────────────────────
-const defaultVehicles = [
-  {
-    id: 1, type: 'suv', name: 'Innova Crysta', seats: '7 Seats', bags: '4 Bags', ac: 'AC', price: '₹22/km',
-    image: 'car 1.jpeg',
-    dayRent: 'Rs. 2700', perKm: 'Rs. 17', minKm: '300 kms',
-    extraKm: 'Rs. 22', driverCharge: 'Rs. 400 / day',
-  },
-  {
-    id: 2, type: 'suv', name: 'Toyota Innova', seats: '7 Seats', bags: '4 Bags', ac: 'AC', price: '₹19/km',
-    image: 'car 2.jpeg',
-    dayRent: 'Rs. 2300', perKm: 'Rs. 13', minKm: '300 kms',
-    extraKm: 'Rs. 19', driverCharge: 'Rs. 300 / day',
-  },
-  {
-    id: 3, type: 'sedan', name: 'Swift Dzire', seats: '4 Seats', bags: '2 Bags', ac: 'AC', price: '₹14/km',
-    image: 'car 3.png',
-    dayRent: 'Rs. 1600', perKm: 'Rs. 11', minKm: '250 kms',
-    extraKm: 'Rs. 14', driverCharge: 'Rs. 300 / day',
-  },
-  {
-    id: 4, type: 'tempo', name: 'Tempo Traveller (12 Seater)', seats: '12 Seats', bags: '6 Bags', ac: 'AC', price: '₹25/km',
-    image: 'car 4.jpg',
-    dayRent: 'Rs. 2800', perKm: 'Rs. 18', minKm: '350 kms',
-    extraKm: 'Rs. 25', driverCharge: 'Rs. 300 / day',
-  },
-  {
-    id: 5, type: 'tempo', name: 'Tempo Traveller (18 Seater)', seats: '18 Seats', bags: '8 Bags', ac: 'AC', price: '₹30/km',
-    image: 'car 5.jpeg',
-    dayRent: 'Rs. 3900', perKm: 'Rs. 22', minKm: '300 kms',
-    extraKm: 'Rs. 30', driverCharge: 'Rs. 300 / day',
-  },
-  {
-    id: 6, type: 'tempo', name: 'Urbania', seats: '12+1 / 14+1 Seats', bags: '8 Bags', ac: 'AC', price: '₹27/km',
-    image: 'car 6.jpeg',
-    dayRent: 'Rs. 7500', perKm: 'Rs. 27', minKm: '250 kms',
-    extraKm: 'Rs. 37', driverCharge: 'Rs. 300 / day',
-  },
-];
 
 const filterTabs = [
   { id: 'all', label: 'All Vehicles', icon: '🚗' },
@@ -114,7 +86,7 @@ const whyItems = [
 // ─── Vehicles Page ────────────────────────────────────────────
 const Vehicles = () => {
   const { t } = useTranslation();
-  const [cars, setCars] = useState(defaultVehicles);
+  const [cars, setCars] = useState([]);
   const [loading, setLoading] = useState(true);
   const [activeFilter, setActiveFilter] = useState('all');
   const [modalData, setModalData] = useState({ isOpen: false, vehicle: '' });
@@ -122,7 +94,22 @@ const Vehicles = () => {
   const [cardPlans, setCardPlans] = useState({});
 
   useEffect(() => {
-    setLoading(false);
+    const fetchCars = async () => {
+      try {
+        const response = await fetch(`${API_BASE_URL}/api/cars`);
+        if (response.ok) {
+          const data = await response.json();
+          if (data && data.length > 0) {
+            setCars(data);
+          }
+        }
+      } catch (error) {
+        console.error('Failed to fetch cars', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchCars();
   }, []);
 
   const openBookingModal = (vehicleName) => setModalData({ isOpen: true, vehicle: vehicleName });
@@ -241,41 +228,66 @@ const Vehicles = () => {
 
                         {/* Plans Section */}
                         <div className="flex flex-col gap-4 mb-6">
-                          {/* Outstation Plan */}
-                          <div className="bg-[#fcfcfc] border border-gray-100 rounded-2xl p-4 shadow-sm">
-                            <div className="flex items-center gap-2 mb-3">
-                              <div className="w-2 h-2 rounded-full bg-yellow-400"></div>
-                              <span className="text-[11px] font-black text-gray-400 uppercase tracking-widest">Outstation Plan</span>
-                            </div>
-                            <div className="flex justify-between items-center mb-2.5">
-                              <span className="text-sm font-bold text-[#6b7280]">Rate</span>
-                              <span className="text-sm font-bold text-[#111827] bg-white border border-gray-100 px-3 py-1 rounded-md shadow-sm">{v.price || v.perKm}</span>
-                            </div>
-                            <div className="flex justify-between items-center">
-                              <span className="text-sm font-bold text-[#6b7280]">Min Distance</span>
-                              <span className="text-sm font-bold text-[#111827] bg-white border border-gray-100 px-3 py-1 rounded-md shadow-sm">{v.minKm?.toLowerCase().includes('above') ? v.minKm : `Above ${v.minKm || '300 kms'}`}</span>
-                            </div>
-                          </div>
+                          {(() => {
+                            const plans = parseDesc(v.desc);
+                            if (plans && Object.keys(plans).length > 0) {
+                              return Object.values(plans).map((plan, pIdx) => (
+                                <div key={pIdx} className="bg-[#fcfcfc] border border-gray-100 rounded-2xl p-4 shadow-sm">
+                                  <div className="flex items-center gap-2 mb-3">
+                                    <div className={`w-2 h-2 rounded-full ${pIdx % 2 === 0 ? 'bg-yellow-400' : 'bg-green-500'}`}></div>
+                                    <span className="text-[11px] font-black text-gray-400 uppercase tracking-widest">{plan.title}</span>
+                                  </div>
+                                  {plan.items.map((item, iIdx) => (
+                                    <div key={iIdx} className={`flex justify-between items-center ${iIdx !== plan.items.length - 1 ? 'mb-2.5' : ''}`}>
+                                      <span className="text-sm font-bold text-[#6b7280]">{item.label}</span>
+                                      <span className="text-sm font-bold text-[#111827] bg-white border border-gray-100 px-3 py-1 rounded-md shadow-sm">{item.value}</span>
+                                    </div>
+                                  ))}
+                                </div>
+                              ));
+                            }
+                            
+                            // Legacy Fallback
+                            return (
+                              <>
+                                {/* Outstation Plan */}
+                                <div className="bg-[#fcfcfc] border border-gray-100 rounded-2xl p-4 shadow-sm">
+                                  <div className="flex items-center gap-2 mb-3">
+                                    <div className="w-2 h-2 rounded-full bg-yellow-400"></div>
+                                    <span className="text-[11px] font-black text-gray-400 uppercase tracking-widest">Outstation Plan</span>
+                                  </div>
+                                  <div className="flex justify-between items-center mb-2.5">
+                                    <span className="text-sm font-bold text-[#6b7280]">Rate</span>
+                                    <span className="text-sm font-bold text-[#111827] bg-white border border-gray-100 px-3 py-1 rounded-md shadow-sm">{v.price || v.perKm}</span>
+                                  </div>
+                                  <div className="flex justify-between items-center">
+                                    <span className="text-sm font-bold text-[#6b7280]">Min Distance</span>
+                                    <span className="text-sm font-bold text-[#111827] bg-white border border-gray-100 px-3 py-1 rounded-md shadow-sm">{v.minKm?.toLowerCase().includes('above') ? v.minKm : `Above ${v.minKm || '300 kms'}`}</span>
+                                  </div>
+                                </div>
 
-                          {/* Day Rental Plan */}
-                          <div className="bg-[#fcfcfc] border border-gray-100 rounded-2xl p-4 shadow-sm">
-                            <div className="flex items-center gap-2 mb-3">
-                              <div className="w-2 h-2 rounded-full bg-green-500"></div>
-                              <span className="text-[11px] font-black text-gray-400 uppercase tracking-widest">Day Rental Plan</span>
-                            </div>
-                            <div className="flex justify-between items-center mb-2.5">
-                              <span className="text-sm font-bold text-[#6b7280]">Base Rent</span>
-                              <span className="text-sm font-bold text-[#111827] bg-white border border-gray-100 px-3 py-1 rounded-md shadow-sm">{v.dayRent || '—'}</span>
-                            </div>
-                            <div className="flex justify-between items-center mb-2.5">
-                              <span className="text-sm font-bold text-[#6b7280]">Per km Charge</span>
-                              <span className="text-sm font-bold text-[#111827] bg-white border border-gray-100 px-3 py-1 rounded-md shadow-sm">{v.perKm ? (v.perKm.includes('/km') ? v.perKm : `${v.perKm}/km`) : '—'}</span>
-                            </div>
-                            <div className="flex justify-between items-center">
-                              <span className="text-sm font-bold text-[#6b7280]">Driver Charge</span>
-                              <span className="text-sm font-bold text-[#111827] bg-white border border-gray-100 px-3 py-1 rounded-md shadow-sm">{v.driverCharge || '—'}</span>
-                            </div>
-                          </div>
+                                {/* Day Rental Plan */}
+                                <div className="bg-[#fcfcfc] border border-gray-100 rounded-2xl p-4 shadow-sm">
+                                  <div className="flex items-center gap-2 mb-3">
+                                    <div className="w-2 h-2 rounded-full bg-green-500"></div>
+                                    <span className="text-[11px] font-black text-gray-400 uppercase tracking-widest">Day Rental Plan</span>
+                                  </div>
+                                  <div className="flex justify-between items-center mb-2.5">
+                                    <span className="text-sm font-bold text-[#6b7280]">Base Rent</span>
+                                    <span className="text-sm font-bold text-[#111827] bg-white border border-gray-100 px-3 py-1 rounded-md shadow-sm">{v.dayRent || '—'}</span>
+                                  </div>
+                                  <div className="flex justify-between items-center mb-2.5">
+                                    <span className="text-sm font-bold text-[#6b7280]">Per km Charge</span>
+                                    <span className="text-sm font-bold text-[#111827] bg-white border border-gray-100 px-3 py-1 rounded-md shadow-sm">{v.perKm ? (v.perKm.includes('/km') ? v.perKm : `${v.perKm}/km`) : '—'}</span>
+                                  </div>
+                                  <div className="flex justify-between items-center">
+                                    <span className="text-sm font-bold text-[#6b7280]">Driver Charge</span>
+                                    <span className="text-sm font-bold text-[#111827] bg-white border border-gray-100 px-3 py-1 rounded-md shadow-sm">{v.driverCharge || '—'}</span>
+                                  </div>
+                                </div>
+                              </>
+                            );
+                          })()}
                         </div>
                       </div>
 
