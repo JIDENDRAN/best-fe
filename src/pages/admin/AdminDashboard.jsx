@@ -229,6 +229,22 @@ const AdminDashboard = () => {
     }
   };
 
+  const handleWhatsappTest = async () => {
+    try {
+      setLoadingWhatsapp(true);
+      const response = await fetch(`${API_BASE_URL}/api/admin/whatsapp-test`, { method: 'POST' });
+      if (response.ok) {
+        showToast('Test message sent successfully!', 'success');
+      } else {
+        showToast('Failed to send test message.', 'error');
+      }
+    } catch (error) {
+      showToast('Error sending test message.', 'error');
+    } finally {
+      setLoadingWhatsapp(false);
+    }
+  };
+
   // Load all based on active tab
   useEffect(() => {
     setLoading(true);
@@ -990,13 +1006,22 @@ Driver Charge: ${data.dayDriver || ''}`;
                         </div>
                         <div className="flex gap-2">
                           {whatsappStatus.isConnected && (
-                            <button
-                              onClick={handleWhatsappDisconnect}
-                              disabled={loadingWhatsapp}
-                              className="bg-red-50 hover:bg-red-100 text-red-600 border border-red-200 shadow-sm px-4 py-2 rounded-xl text-xs font-bold transition-all disabled:opacity-50"
-                            >
-                              Disconnect
-                            </button>
+                            <>
+                              <button
+                                onClick={handleWhatsappTest}
+                                disabled={loadingWhatsapp}
+                                className="bg-[#1a3c34] hover:bg-[#2d5a4e] text-white border border-[#1a3c34] shadow-sm px-4 py-2 rounded-xl text-xs font-bold transition-all disabled:opacity-50"
+                              >
+                                Test Message
+                              </button>
+                              <button
+                                onClick={handleWhatsappDisconnect}
+                                disabled={loadingWhatsapp}
+                                className="bg-red-50 hover:bg-red-100 text-red-600 border border-red-200 shadow-sm px-4 py-2 rounded-xl text-xs font-bold transition-all disabled:opacity-50"
+                              >
+                                Disconnect
+                              </button>
+                            </>
                           )}
                           <button
                             onClick={handleWhatsappReconnect}
