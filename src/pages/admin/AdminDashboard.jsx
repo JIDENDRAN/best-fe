@@ -185,30 +185,45 @@ const AdminDashboard = () => {
 
   const fetchWhatsappStatus = async () => {
     try {
-      const res = await fetch(`${API_BASE_URL}/api/admin/whatsapp-status`);
-      if (res.ok) {
-        const data = await res.json();
+      const response = await fetch(`${API_BASE_URL}/api/admin/whatsapp-status`);
+      if (response.ok) {
+        const data = await response.json();
         setWhatsappStatus(data);
       }
-    } catch (err) {
-      console.error('Error loading WhatsApp status:', err);
+    } catch (error) {
+      console.error('Failed to fetch WhatsApp status', error);
     }
   };
 
   const handleWhatsappReconnect = async () => {
-    setLoadingWhatsapp(true);
     try {
-      const res = await fetch(`${API_BASE_URL}/api/admin/whatsapp-reconnect`, {
-        method: 'POST'
-      });
-      if (res.ok) {
-        showToast('Reconnection sequence triggered.');
-        await fetchWhatsappStatus();
+      setLoadingWhatsapp(true);
+      const response = await fetch(`${API_BASE_URL}/api/admin/whatsapp-reconnect`, { method: 'POST' });
+      if (response.ok) {
+        showToast('WhatsApp bot reconnect triggered', 'success');
+        setTimeout(fetchWhatsappStatus, 2000);
       } else {
-        showToast('Failed to trigger reconnect.', 'error');
+        showToast('Failed to trigger reconnect', 'error');
       }
-    } catch (err) {
-      showToast('Connection error.', 'error');
+    } catch (error) {
+      showToast('Error reconnecting bot', 'error');
+    } finally {
+      setLoadingWhatsapp(false);
+    }
+  };
+
+  const handleWhatsappDisconnect = async () => {
+    try {
+      setLoadingWhatsapp(true);
+      const response = await fetch(`${API_BASE_URL}/api/admin/whatsapp-disconnect`, { method: 'POST' });
+      if (response.ok) {
+        showToast('WhatsApp bot disconnected successfully', 'success');
+        setTimeout(fetchWhatsappStatus, 1000);
+      } else {
+        showToast('Failed to disconnect bot', 'error');
+      }
+    } catch (error) {
+      showToast('Error disconnecting bot', 'error');
     } finally {
       setLoadingWhatsapp(false);
     }
@@ -973,13 +988,24 @@ Driver Charge: ${data.dayDriver || ''}`;
                             {whatsappStatus.isConnected ? 'CONNECTED' : 'DISCONNECTED'}
                           </span>
                         </div>
-                        <button
-                          onClick={handleWhatsappReconnect}
-                          disabled={loadingWhatsapp}
-                          className="bg-white hover:bg-gray-50 text-gray-700 border border-gray-300 shadow-sm px-4 py-2 rounded-xl text-xs font-bold transition-all disabled:opacity-50"
-                        >
-                          {loadingWhatsapp ? 'Reconnecting...' : 'Reconnect Bot'}
-                        </button>
+                        <div className="flex gap-2">
+                          {whatsappStatus.isConnected && (
+                            <button
+                              onClick={handleWhatsappDisconnect}
+                              disabled={loadingWhatsapp}
+                              className="bg-red-50 hover:bg-red-100 text-red-600 border border-red-200 shadow-sm px-4 py-2 rounded-xl text-xs font-bold transition-all disabled:opacity-50"
+                            >
+                              Disconnect
+                            </button>
+                          )}
+                          <button
+                            onClick={handleWhatsappReconnect}
+                            disabled={loadingWhatsapp}
+                            className="bg-white hover:bg-gray-50 text-gray-700 border border-gray-300 shadow-sm px-4 py-2 rounded-xl text-xs font-bold transition-all disabled:opacity-50"
+                          >
+                            {loadingWhatsapp ? 'Processing...' : 'Reconnect Bot'}
+                          </button>
+                        </div>
                       </div>
 
                       {!whatsappStatus.isConnected && (
@@ -1249,7 +1275,21 @@ Driver Charge: ${data.dayDriver || ''}`;
                         </div>
                       </div>
                     </div>
-                    <div>
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
+                      <div>
+                        <label className="text-xs font-bold text-gray-500 uppercase">Rating</label>
+                        <input type="text" value={pkgModal.data.rating || ''} onChange={e => setPkgModal({ ...pkgModal, data: { ...pkgModal.data, rating: e.target.value } })} className="w-full mt-1 bg-[#f7f5f0] border border-[#edeae1] p-3 rounded-xl focus:outline-none focus:border-[#d4951e]" placeholder="e.g. 5.0" />
+                      </div>
+                      <div>
+                        <label className="text-xs font-bold text-gray-500 uppercase">Review Count</label>
+                        <input type="text" value={pkgModal.data.reviewCount || ''} onChange={e => setPkgModal({ ...pkgModal, data: { ...pkgModal.data, reviewCount: e.target.value } })} className="w-full mt-1 bg-[#f7f5f0] border border-[#edeae1] p-3 rounded-xl focus:outline-none focus:border-[#d4951e]" placeholder="e.g. 250+" />
+                      </div>
+                      <div>
+                        <label className="text-xs font-bold text-gray-500 uppercase">Location</label>
+                        <input type="text" value={pkgModal.data.location || ''} onChange={e => setPkgModal({ ...pkgModal, data: { ...pkgModal.data, location: e.target.value } })} className="w-full mt-1 bg-[#f7f5f0] border border-[#edeae1] p-3 rounded-xl focus:outline-none focus:border-[#d4951e]" placeholder="e.g. Madurai, Tamil Nadu" />
+                      </div>
+                    </div>
+                    <div className="mt-4">
                       <label className="text-xs font-bold text-gray-500 uppercase">Places Covered (Description)</label>
                       <textarea value={pkgModal.data.places} onChange={e => setPkgModal({ ...pkgModal, data: { ...pkgModal.data, places: e.target.value } })} className="w-full mt-1 bg-[#f7f5f0] border border-[#edeae1] p-3 rounded-xl focus:outline-none focus:border-[#d4951e] h-24" required></textarea>
                     </div>

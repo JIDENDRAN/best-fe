@@ -73,14 +73,7 @@ const parseDesc = (descString) => {
   return plans;
 };
 
-const defaultPackages = [
-  { name: 'Madurai Local Tour', duration: '2 Days', places: 'Explore Meenakshi Temple, local markets & heritage sites.', price: '₹2499', rating: '4.8 (892)', image: 'meenakshi_bg.png' },
-  { name: 'Rameswaram Tour', duration: '2 Days', places: 'Visit Rameswaram, Dhanushkodi & spiritual places.', price: '₹6499', rating: '4.9 (920)', image: 'rameswaram_bg.png' },
-  { name: 'Kodaikanal Tour', duration: '4 Days', places: 'Enjoy lakes, waterfalls & the beauty of the hills.', price: '₹7999', rating: '4.7 (780)', image: 'kodaikanal_bg.png' },
-  { name: 'Ooty Tour', duration: '3 Days', places: 'Discover Ooty\'s charm & scenic Nilgiri landscapes.', price: '₹5999', rating: '4.6 (751)', image: 'ooty_bg.png' },
-  { name: 'Munnar Tour', duration: '2 Days', places: 'Tea Gardens, Eravikulam National Park, Mattupetty Dam.', price: '₹13000', rating: '4.8 (410)', image: 'munnar_bg.png' },
-  { name: 'Kanyakumari Tour', duration: '1 Day', places: 'Vivekananda Rock, Thiruvalluvar Statue, Sunset Point.', price: '₹5500', rating: '4.9 (530)', image: 'kanyakumari_bg.png' },
-];
+// Removed defaultPackages array
 
 import Feedback1 from '../assets/feedback_1.jpg';
 import Feedback2 from '../assets/feedback_2.jpg';
@@ -231,7 +224,24 @@ const Home = () => {
     };
     fetchCars();
   }, []);
-  const [packages, setPackages] = useState(defaultPackages);
+  const [packages, setPackages] = useState([]);
+
+  useEffect(() => {
+    const fetchPackages = async () => {
+      try {
+        const response = await fetch(`${API_BASE_URL}/api/packages`);
+        if (response.ok) {
+          const data = await response.json();
+          if (data && data.length > 0) {
+            setPackages(data);
+          }
+        }
+      } catch (error) {
+        console.error('Failed to fetch packages', error);
+      }
+    };
+    fetchPackages();
+  }, []);
   const [modalData, setModalData] = useState({ isOpen: false, vehicle: '', packageType: '' });
   const [activeVehicle, setActiveVehicle] = useState(0);
   const [reviewIndex, setReviewIndex] = useState(0);

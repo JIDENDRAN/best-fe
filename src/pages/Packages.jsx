@@ -16,76 +16,7 @@ import ThanjavurBg from '../assets/thanjavur_bg.png';
 import MaduraiAerialBg from '../assets/madurai_aerial_bg.png';
 import ThirumalaiDesktop from '../assets/thirumalai_desktop.png';
 
-// Default packages shown when API fails
-const defaultPackages = [
-  {
-    id: 1,
-    name: 'Madurai Local Tour',
-    duration: '8 Hours / 80 KM',
-    places: 'Visit the architectural marvel of Meenakshi Amman Temple, historical Thirumalai Nayakkar...',
-    price: '₹2600',
-    rating: '5.0',
-    reviewCount: '250+',
-    location: 'Madurai, Tamil Nadu',
-    image: 'meenakshi_bg.png',
-  },
-  {
-    id: 2,
-    name: 'Rameswaram Tour',
-    duration: '2 Days / 120 KM',
-    places: 'Pilgrimage to Ramanathaswamy Temple, dynamic sea drive to Dhanushkodi beach, and...',
-    price: '₹6000',
-    rating: '5.0',
-    reviewCount: '200+',
-    location: 'Rameswaram, Tamil Nadu',
-    image: 'rameswaram_bg.png',
-  },
-  {
-    id: 3,
-    name: 'Kodaikanal Tour',
-    duration: '2 Days / 120 KM',
-    places: 'Relax by Kodaikanal Lake, walk through Coaker\'s walk, and capture the colossal Pillar Rocks.',
-    price: '₹5000',
-    rating: '5.0',
-    reviewCount: '180+',
-    location: 'Kodaikanal, Tamil Nadu',
-    image: 'kodaikanal_bg.png',
-  },
-  {
-    id: 4,
-    name: 'Ooty & Coonoor Tour',
-    duration: '3 Days / 200 KM',
-    places: 'Experience the Nilgiris with scenic toy train rides, tea gardens, lakes, and breathtaking views.',
-    price: '₹6500',
-    rating: '4.9',
-    reviewCount: '150+',
-    location: 'Ooty, Tamil Nadu',
-    image: 'ooty_bg.png',
-  },
-  {
-    id: 5,
-    name: 'Kanyakumari Tour',
-    duration: '1 Day / 240 KM',
-    places: 'Vivekananda Rock Memorial, Thiruvalluvar Statue, and the tri-sea confluence at sunset.',
-    price: '₹5500',
-    rating: '4.9',
-    reviewCount: '300+',
-    location: 'Kanyakumari, Tamil Nadu',
-    image: 'kanyakumari_bg.png',
-  },
-  {
-    id: 6,
-    name: 'Munnar Tour',
-    duration: '2 Days / 280 KM',
-    places: 'Tea gardens, Eravikulam National Park, Mattupetty Dam, and stunning hill views.',
-    price: '₹7999',
-    rating: '4.8',
-    reviewCount: '120+',
-    location: 'Munnar, Kerala',
-    image: 'munnar_bg.png',
-  },
-];
-
+// Removed hardcoded defaultPackages
 const trustItems = [
   { icon: <ShieldCheck className="w-5 h-5 text-[#f5c842]" />, title: 'Best Price Guarantee', desc: 'Get the best deals always' },
   { icon: <Calendar className="w-5 h-5 text-[#f5c842]" />, title: 'Easy Booking', desc: 'Book in just a few clicks' },
@@ -95,14 +26,29 @@ const trustItems = [
 
 const Packages = () => {
   const { t } = useTranslation();
-  const [packages, setPackages] = useState(defaultPackages);
+  const [packages, setPackages] = useState([]);
   const [loading, setLoading] = useState(true);
   const [modalData, setModalData] = useState({ isOpen: false, packageType: '' });
   const [selectedDetails, setSelectedDetails] = useState(null);
   const [sortBy, setSortBy] = useState('Popular');
 
   useEffect(() => {
-    setLoading(false);
+    const fetchPackages = async () => {
+      try {
+        const response = await fetch(`${API_BASE_URL}/api/packages`);
+        if (response.ok) {
+          const data = await response.json();
+          if (data && data.length > 0) {
+            setPackages(data);
+          }
+        }
+      } catch (error) {
+        console.error('Failed to fetch packages', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchPackages();
   }, []);
 
   const openBookingModal = (pkgName) => setModalData({ isOpen: true, packageType: pkgName });
