@@ -61,9 +61,9 @@ const Navbar = () => {
         : 'bg-white border-b border-slate-100 shadow-md'
     }`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className={`flex justify-between items-center transition-all duration-500 ${isScrolled ? 'h-16' : 'h-20'}`}>
+        <div className={`relative flex justify-between items-center transition-all duration-500 ${isScrolled ? 'h-16' : 'h-20'}`}>
           {/* Logo */}
-          <div className="flex-shrink-0 flex items-center">
+          <div className="absolute left-1/2 -translate-x-1/2 md:static md:transform-none flex-shrink-0 flex items-center">
             <Link to="/" className="flex items-center gap-2 group">
                               <img src={Logo} alt="Madurai Best Tours and Travels" className="h-12 w-auto object-contain drop-shadow-[0_0_15px_rgba(250,204,21,0.4)] group-hover:scale-105 transition-transform duration-300" />
               <div className="flex flex-col hidden sm:flex">
@@ -124,7 +124,7 @@ const Navbar = () => {
           </div>
 
           {/* Mobile Header (Language Selector + Menu Button) */}
-          <div className="md:hidden flex items-center gap-2">
+          <div className="md:hidden flex items-center gap-2 ml-auto">
             {/* Language Selector (Mobile) */}
             <button
               ref={mobileLangRef}
