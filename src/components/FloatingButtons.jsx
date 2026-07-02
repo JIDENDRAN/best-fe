@@ -12,7 +12,7 @@ export default function FloatingButtons() {
   const whatsappUrl = `https://wa.me/91${adminNumber}?text=Hello%2C%20I%20want%20to%20book%20a%20taxi%20with%20Madurai%20Tour%20Taxi.`;
 
   return (
-    <div className="fixed bottom-6 left-1/2 -translate-x-1/2 md:left-auto md:translate-x-0 md:right-6 z-[999] flex flex-row md:flex-col gap-4 md:gap-4">
+    <div className="fixed bottom-6 right-6 z-[999] flex flex-col gap-4">
       {/* Call Button */}
       <a
         href={`tel:${adminNumber}`}

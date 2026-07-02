@@ -85,6 +85,9 @@ const AdminDashboard = () => {
   const [settings, setSettings] = useState({ name: '', phone: '', whatsapp: '', password: '' });
   const [whatsappStatus, setWhatsappStatus] = useState({ isConnected: false, qrCode: null });
   const [loadingWhatsapp, setLoadingWhatsapp] = useState(false);
+  const [customMsgPhone, setCustomMsgPhone] = useState('');
+  const [customMsgText, setCustomMsgText] = useState('');
+  const [sendingCustomMsg, setSendingCustomMsg] = useState(false);
 
   const [loading, setLoading] = useState(true);
 
@@ -242,6 +245,32 @@ const AdminDashboard = () => {
       showToast('Error sending test message.', 'error');
     } finally {
       setLoadingWhatsapp(false);
+    }
+  };
+
+  const handleSendCustomMessage = async () => {
+    if (!customMsgPhone.trim() || !customMsgText.trim()) {
+      showToast('Please enter both phone number and message', 'error');
+      return;
+    }
+    try {
+      setSendingCustomMsg(true);
+      const response = await fetch(`${API_BASE_URL}/api/admin/whatsapp-custom-message`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ phone: customMsgPhone, message: customMsgText })
+      });
+      if (response.ok) {
+        showToast('Custom message sent successfully!', 'success');
+        setCustomMsgPhone('');
+        setCustomMsgText('');
+      } else {
+        showToast('Failed to send message. Is number registered on WhatsApp?', 'error');
+      }
+    } catch (error) {
+      showToast('Error sending message', 'error');
+    } finally {
+      setSendingCustomMsg(false);
     }
   };
 
@@ -1057,8 +1086,42 @@ Driver Charge: ${data.dayDriver || ''}`;
                       )}
 
                       {whatsappStatus.isConnected && (
-                        <div className="text-center p-8 bg-emerald-50 border border-emerald-100 rounded-2xl text-emerald-700">
-                          <p className="text-sm font-bold">Bot is active and ready to dispatch booking and contact alerts to admin.</p>
+                        <div className="space-y-4">
+                          <div className="text-center p-6 bg-emerald-50 border border-emerald-100 rounded-2xl text-emerald-700">
+                            <p className="text-sm font-bold">Bot is active and ready to dispatch booking and contact alerts to admin.</p>
+                          </div>
+                          
+                          {/* Send Custom Message UI */}
+                          <div className="bg-[#f7f5f0] border border-[#edeae1] rounded-2xl p-5 shadow-sm">
+                            <h4 className="text-sm font-bold text-[#1a3c34] mb-4 flex items-center gap-2">
+                              <MessageSquare className="w-4 h-4" /> Send Custom Message
+                            </h4>
+                            <div className="space-y-3">
+                              <div className="relative">
+                                <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 font-bold text-xs">WA</span>
+                                <input
+                                  type="text"
+                                  value={customMsgPhone}
+                                  onChange={(e) => setCustomMsgPhone(e.target.value)}
+                                  className="w-full bg-white border border-[#edeae1] text-gray-800 pl-10 pr-4 py-3 rounded-xl focus:outline-none focus:border-[#d4951e] focus:ring-1 focus:ring-[#d4951e] transition-all text-xs font-semibold"
+                                  placeholder="Recipient Phone Number (e.g. 6382513075)"
+                                />
+                              </div>
+                              <textarea
+                                value={customMsgText}
+                                onChange={(e) => setCustomMsgText(e.target.value)}
+                                className="w-full bg-white border border-[#edeae1] text-gray-800 p-4 rounded-xl focus:outline-none focus:border-[#d4951e] focus:ring-1 focus:ring-[#d4951e] transition-all text-xs resize-none h-24 font-medium"
+                                placeholder="Type your custom message here..."
+                              ></textarea>
+                              <button
+                                onClick={handleSendCustomMessage}
+                                disabled={sendingCustomMsg || !customMsgPhone || !customMsgText}
+                                className="w-full bg-[#1a3c34] hover:bg-[#2d5a4e] text-white font-bold py-3 rounded-xl transition-all shadow-sm text-xs disabled:opacity-50 flex items-center justify-center gap-2"
+                              >
+                                {sendingCustomMsg ? 'Sending...' : 'Send Custom Message'}
+                              </button>
+                            </div>
+                          </div>
                         </div>
                       )}
                     </div>
