@@ -1,7 +1,9 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, lazy, Suspense } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import { motion, AnimatePresence, useScroll, useTransform, useInView } from 'framer-motion';
+
+const GoogleReviews = lazy(() => import('../components/GoogleReviews'));
 import {
   PhoneCall, Calendar, MapPin, Clock, Users, ShieldCheck, Car as CarIcon,
   CheckCircle2, MessageCircle, Star, Wallet, Navigation, ArrowRight,
@@ -32,6 +34,8 @@ import CochinBg from '../assets/cochin_bg.png';
 import AlleppeyBg from '../assets/alleppey_bg.png';
 import TrivandrumBg from '../assets/trivandrum_bg.png';
 import AthirapillyBg from '../assets/athirapilly_bg.png';
+import PromoVideo1 from '../assets/WhatsApp Video 2026-07-27 at 11.43.02 AM.mp4';
+import PromoVideo2 from '../assets/WhatsApp Video 2026-07-27 at 11.43.02 AM (1).mp4';
 
 // ─── Default Data ────────────────────────────────────────────
 const parseDesc = (descString) => {
@@ -75,39 +79,7 @@ const parseDesc = (descString) => {
 
 // Removed defaultPackages array
 
-import Feedback1 from '../assets/feedback_1.jpg';
-import Feedback2 from '../assets/feedback_2.jpg';
-import Feedback3 from '../assets/feedback_3.jpg';
-import Feedback4 from '../assets/feedback_4.jpg';
-import FeedbackNew1 from '../assets/feedback_new_1.jpg';
-import FeedbackNew2 from '../assets/feedback_new_2.jpg';
-import FeedbackNew3 from '../assets/feedback_new_3.jpg';
-import WA1 from '../assets/WhatsApp Image 2026-06-10 at 12.19.24 PM.jpeg';
-import WA2 from '../assets/WhatsApp Image 2026-06-10 at 12.19.24 PM (1).jpeg';
-import WA3 from '../assets/WhatsApp Image 2026-06-10 at 12.19.25 PM.jpeg';
-import WA4 from '../assets/WhatsApp Image 2026-06-10 at 12.19.25 PM (1).jpeg';
-import WA5 from '../assets/WhatsApp Image 2026-06-10 at 12.19.26 PM.jpeg';
-import WA6 from '../assets/WhatsApp Image 2026-06-10 at 12.19.27 PM.jpeg';
-import WA7 from '../assets/WhatsApp Image 2026-06-10 at 12.19.27 PM (1).jpeg';
-import WA8 from '../assets/WhatsApp Image 2026-06-10 at 12.19.28 PM.jpeg';
-
-const reviewsData = [
-  { name: 'Rajesh Kannan & Family', text: 'Perfect family tour to Rameswaram & Madurai! Exceptionally clean vehicle & safe driving.', role: 'Coimbatore', rating: 5, avatar: Feedback1, position: 'center 35%' },
-  { name: 'Abhishek & Family', text: 'Amazing 5-day South India trip! Punctual driver, great routes, and super comfortable ride.', role: 'Bangalore', rating: 5, avatar: Feedback2, position: 'center 20%' },
-  { name: 'Sunita Deshmukh', text: 'Super comfortable Innova Crysta. As solo women travelers, we felt extremely safe!', role: 'Pune', rating: 5, avatar: Feedback3, position: 'center 10%' },
-  { name: 'Dr. Sandeep Sen & Group', text: 'Excellent service! Large vehicle, accommodated all luggage, and friendly driver.', role: 'Kolkata', rating: 5, avatar: Feedback4, position: 'center 35%' },
-  { name: 'Aarthi & Friends', text: 'Perfect sunset tour! Extremely safe driving and clean car.', role: 'Chennai', rating: 5, avatar: FeedbackNew1, position: 'center 40%' },
-  { name: 'Rajesh & Family', text: 'Top-notch service! The driver was friendly, punctual, and very helpful.', role: 'Bangalore', rating: 5, avatar: FeedbackNew2, position: 'center 25%' },
-  { name: 'Sanjay Kumar & Group', text: 'Very comfortable ride. The driver knew all local spots and guided us well.', role: 'Hyderabad', rating: 5, avatar: FeedbackNew3, position: 'center 25%' },
-  { name: 'Vinoth Kumar & Family', text: 'Very professional driver. The tour was extremely comfortable and safe.', role: 'Salem', rating: 5, avatar: WA1, position: 'center 20%' },
-  { name: 'Meenakshi S. & Friends', text: 'Awesome tour! Visited all local temples with zero stress.', role: 'Madurai', rating: 5, avatar: WA2, position: 'center 15%' },
-  { name: 'Devendra Nath', text: 'Clean car and highly punctual pickup. Recommend them to everyone!', role: 'Chennai', rating: 5, avatar: WA3, position: 'center 20%' },
-  { name: 'Harish & Family', text: 'Best taxi service for family trips. Safe, quick, and polite service.', role: 'Trichy', rating: 5, avatar: WA4, position: 'center 25%' },
-  { name: 'Rakesh Balakrishnan', text: 'Very polite driver who knew all routes perfectly. Highly recommended!', role: 'Bangalore', rating: 5, avatar: WA5, position: 'center 20%' },
-  { name: 'Sneha Patel', text: 'Felt extremely safe as a solo traveler. Wonderful experience!', role: 'Ahmedabad', rating: 5, avatar: WA6, position: 'center 15%' },
-  { name: 'Gurbaksh Singh', text: 'Spacious vehicle, clean AC, and very professional behavior. 5 stars!', role: 'Delhi', rating: 5, avatar: WA7, position: 'center 20%' },
-  { name: 'Prabhu Devan', text: 'Smooth and budget-friendly trip. Will definitely book again!', role: 'Kochi', rating: 5, avatar: WA8, position: 'center 25%' }
-];
+// Dynamic Google Reviews will load here; static fallback is modularized inside GoogleReviews component
 
 const destinations = [
   { name: 'Madurai', subtext: 'Meenakshi Temple', img: MeenakshiBg, category: 'temple' },
@@ -244,7 +216,6 @@ const Home = () => {
   }, []);
   const [modalData, setModalData] = useState({ isOpen: false, vehicle: '', packageType: '' });
   const [activeVehicle, setActiveVehicle] = useState(0);
-  const [reviewIndex, setReviewIndex] = useState(0);
   const pickupRef = useRef(null);
   const dropRef = useRef(null);
   const [loadingPickup, setLoadingPickup] = useState(false);
@@ -270,10 +241,7 @@ const Home = () => {
     return () => clearInterval(timer);
   }, [heroImages.length]);
 
-  useEffect(() => {
-    const timer = setInterval(() => setReviewIndex(p => (p + 1) % reviewsData.length), 4000);
-    return () => clearInterval(timer);
-  }, []);
+  // Dynamic Google Reviews slide interval is handled internally by GoogleReviews component
 
 
 
@@ -1027,103 +995,104 @@ const Home = () => {
         </div>
       </section>
 
-      {/* ── TESTIMONIALS ─────────────────────────────────── */}
-      <section className="py-10 lg:py-16 bg-[#0f2420] relative overflow-hidden text-white">
-        <div className="absolute inset-0 z-0">
-          <img src={MeenakshiBg} alt="" loading="lazy" className="w-full h-full object-cover opacity-10" />
-          <div className="absolute inset-0 bg-[#0f2420]/90" />
-        </div>
-        <div className="max-w-7xl mx-auto px-4 lg:px-6 relative z-10">
-          <div className="text-center mb-8">
-            <span className="text-[#f5c842] text-xs font-bold uppercase tracking-widest block mb-2">{t('WHAT OUR TRAVELERS SAY')}</span>
-            <h2 className="text-3xl lg:text-4xl font-poppins font-black text-white">
-              {t('Stories from')}{' '}
-              <span className="text-[#f5c842] font-dancing text-4xl lg:text-5xl normal-case font-bold">{t('Happy Travelers')}</span>
-            </h2>
-            <div className="w-16 h-0.5 bg-[#d4951e] mx-auto mt-3" />
-          </div>
-
-          <div className="relative px-0 md:px-6">
-            {/* Navigation Arrows (Only show if there are more than 3 reviews) */}
-            {reviewsData.length > 3 && (
-              <>
-                <button
-                  onClick={() => setReviewIndex(prev => (prev === 0 ? reviewsData.length - 3 : prev - 1))}
-                  className="absolute left-0 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full border border-white/20 hover:border-[#f5c842] bg-white/5 hover:bg-[#f5c842] hover:text-[#0f2420] text-white flex items-center justify-center transition-all z-20 cursor-pointer md:flex hidden"
-                >
-                  <ChevronLeft className="w-5 h-5" />
-                </button>
-                <button
-                  onClick={() => setReviewIndex(prev => (prev >= reviewsData.length - 3 ? 0 : prev + 1))}
-                  className="absolute right-0 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full border border-white/20 hover:border-[#f5c842] bg-white/5 hover:bg-[#f5c842] hover:text-[#0f2420] text-white flex items-center justify-center transition-all z-20 cursor-pointer md:flex hidden"
-                >
-                  <ChevronRight className="w-5 h-5" />
-                </button>
-              </>
-            )}
-
-            {/* Testimonials Grid */}
-            <div className="flex overflow-x-auto snap-x snap-mandatory scrollbar-none gap-4 pb-4 md:grid md:grid-cols-3 md:overflow-visible">
-              {reviewsData.slice(reviewIndex, reviewIndex + 3).map((review, i) => (
-                <motion.div
-                  key={review.name}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, x: -20 }}
-                  transition={{ duration: 0.4 }}
-                  className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-3xl p-4 sm:p-5 flex flex-col justify-between w-[280px] sm:w-[320px] md:w-auto flex-shrink-0 snap-center md:snap-align-none hover:border-[#f5c842]/40 hover:bg-white/10 transition-all duration-300 shadow-lg"
-                >
-                  <div>
-                    {/* Big & Clear Highlighted Image */}
-                    <div className="relative h-44 sm:h-48 w-full rounded-2xl overflow-hidden mb-4 border-2 border-white/20 shadow-md group bg-[#081412]">
-                      <img
-                        src={review.avatar}
-                        alt={`Review of Madurai Taxi Service by ${review.name}`}
-                        loading="eager"
-                        style={{ objectPosition: review.position || 'center' }}
-                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-[#0f2420]/30 via-transparent to-transparent opacity-40 pointer-events-none" />
-                    </div>
-
-                    {/* Short & Sweet Feedback Content */}
-                    <p className="text-white text-center text-xs sm:text-[13px] font-medium leading-relaxed mb-3 px-1 min-h-[36px]">
-                      "{t(review.text)}"
-                    </p>
-
-                    {/* Rating Stars */}
-                    <div className="flex justify-center gap-1 mb-4">
-                      {[...Array(review.rating)].map((_, si) => (
-                        <Star key={si} className="w-4 h-4 text-[#f5c842] fill-current" />
-                      ))}
-                    </div>
-                  </div>
-
-                  {/* Customer Info */}
-                  <div className="pt-3 border-t border-white/10 text-center mt-auto">
-                    <div className="font-extrabold text-white text-xs tracking-wider font-poppins">{review.name}</div>
-                    <div className="text-[#f5c842] text-[10px] uppercase font-bold tracking-widest mt-1.5">{t(review.role)}</div>
-                  </div>
-                </motion.div>
+      {/* ── RATINGS BANNER ──────────────────────────────────── */}
+      <section className="py-8 bg-[#1a3c34]">
+        <div className="max-w-7xl mx-auto px-4 lg:px-6 flex flex-col md:flex-row items-center justify-center gap-8 md:gap-16">
+          <div className="flex items-center gap-4">
+            <div className="flex -space-x-4">
+              {[1, 2, 3, 4].map(i => (
+                <img key={i} src={`https://i.pravatar.cc/100?img=${i + 10}`} className="w-12 h-12 rounded-full border-2 border-[#1a3c34] shadow-md" alt="Happy Traveler" loading="lazy" />
               ))}
+              <div className="w-12 h-12 rounded-full border-2 border-[#1a3c34] bg-[#f5c842] flex items-center justify-center text-[#1a3c34] font-black text-xs shadow-md z-10">
+                +1K
+              </div>
+            </div>
+            <div className="text-white text-left">
+              <div className="font-bold text-lg">1,000+ Happy Trips</div>
+              <div className="text-xs text-white/70">Trusted across South India</div>
             </div>
           </div>
-
-          {/* Dot Indicators */}
-          {reviewsData.length > 3 && (
-            <div className="flex justify-center gap-2 mt-6">
-              {[...Array(reviewsData.length - 2)].map((_, di) => (
-                <button
-                  key={di}
-                  onClick={() => setReviewIndex(di)}
-                  className={`w-2 h-2 rounded-full transition-all duration-300 ${reviewIndex === di ? 'bg-[#f5c842] w-5' : 'bg-white/30'
-                    }`}
-                />
-              ))}
+          
+          <div className="h-12 w-px bg-white/20 hidden md:block"></div>
+          
+          <div className="flex items-center gap-5">
+            <div className="text-5xl font-black text-[#f5c842]">5.0</div>
+            <div className="text-left">
+              <div className="flex gap-1 mb-1.5">
+                {[...Array(5)].map((_, i) => <Star key={i} className="w-4 h-4 text-[#f5c842] fill-current drop-shadow-md" />)}
+              </div>
+              <div className="text-[11px] text-white/90 font-bold tracking-widest uppercase">Google Ratings</div>
             </div>
-          )}
+          </div>
         </div>
       </section>
+
+      {/* ── VIDEO SECTION ───────────────────────────────────── */}
+      <section className="py-12 lg:py-24 bg-white">
+        <div className="max-w-7xl mx-auto px-4 lg:px-6">
+          <SectionHeader
+            tag="Experience the Journey"
+            title={<>Discover <span className="text-[#d4951e] font-dancing text-5xl normal-case font-bold">South India</span></>}
+            subtitle="Watch the breathtaking landscapes and cultural heritage that awaits you."
+          />
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 max-w-6xl mx-auto">
+            <motion.div 
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="relative w-full rounded-[2rem] overflow-hidden shadow-2xl border-[6px] border-[#f5f0e8] aspect-video group cursor-pointer"
+            >
+              <video 
+                className="absolute top-0 left-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.02]"
+                src={PromoVideo1}
+                autoPlay
+                muted
+                loop
+                playsInline
+                controls
+              />
+            </motion.div>
+
+            <motion.div 
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.2 }}
+              className="relative w-full rounded-[2rem] overflow-hidden shadow-2xl border-[6px] border-[#f5f0e8] aspect-video group cursor-pointer"
+            >
+              <video 
+                className="absolute top-0 left-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.02]"
+                src={PromoVideo2}
+                autoPlay
+                muted
+                loop
+                playsInline
+                controls
+              />
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
+
+      {/* ── TESTIMONIALS (DYNAMIC GOOGLE REVIEWS) ────────── */}
+      <Suspense fallback={
+        <section className="py-10 lg:py-16 bg-[#0f2420] text-center text-white relative">
+          <div className="max-w-7xl mx-auto px-4 lg:px-6 animate-pulse">
+            <div className="h-6 bg-white/10 rounded w-1/4 mx-auto mb-4" />
+            <div className="h-10 bg-white/10 rounded w-1/3 mx-auto mb-8" />
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {[...Array(3)].map((_, i) => (
+                <div key={i} className="bg-white/5 rounded-3xl p-6 h-48" />
+              ))}
+            </div>
+          </div>
+        </section>
+      }>
+        <GoogleReviews />
+      </Suspense>
+
 
       {/* ── CTA BANNER ────────────────────────────────────── */}
       <section className="py-10 lg:py-20 bg-[#1a3c34] relative overflow-hidden">
