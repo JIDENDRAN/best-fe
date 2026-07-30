@@ -13,7 +13,8 @@ const ReviewCard = ({ review }) => {
     rating,
     text,
     relativeTime,
-    languageCode
+    languageCode,
+    reviewImage
   } = review;
 
   const [isExpanded, setIsExpanded] = useState(false);
@@ -73,7 +74,7 @@ const ReviewCard = ({ review }) => {
         </div>
 
         {/* Text Content */}
-        <p className="text-white/80 text-xs sm:text-[13px] font-medium leading-relaxed mb-4 text-left">
+        <p className="text-white/80 text-xs sm:text-[13px] font-medium leading-relaxed mb-4 text-left flex-grow">
           "{displayedText}"
           {isLongText && (
             <button
@@ -84,6 +85,19 @@ const ReviewCard = ({ review }) => {
             </button>
           )}
         </p>
+
+        {/* Attached Review Image */}
+        {reviewImage && (
+          <div className="mt-2 mb-3 rounded-xl overflow-hidden relative group shrink-0">
+            <img 
+              src={reviewImage} 
+              alt="Review attachment" 
+              className="w-full h-28 sm:h-32 object-cover transition-transform duration-500 group-hover:scale-105"
+              loading="lazy"
+            />
+            <div className="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-all duration-500 pointer-events-none"></div>
+          </div>
+        )}
       </div>
 
       {/* Optional review language translation info */}

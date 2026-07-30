@@ -54,7 +54,7 @@ const parseDesc = (descString) => {
       if (parts.length >= 2) {
         const label = parts[0].trim();
         let value = parts.slice(1).join(':').trim();
-        
+
         // Auto-format if they only typed numbers
         if (/^\d+$/.test(value)) {
           const lowerLabel = label.toLowerCase();
@@ -179,7 +179,7 @@ const Home = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [vehicles, setVehicles] = useState([]);
-  
+
   useEffect(() => {
     const fetchCars = async () => {
       try {
@@ -329,7 +329,7 @@ const Home = () => {
               initial={{ opacity: 0, x: -30 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8 }}
-              className="lg:col-span-7 lg:row-start-1 lg:col-start-1 lg:self-end text-left flex flex-col items-start w-full order-1"
+              className="lg:col-span-7 lg:row-start-1 lg:col-start-1 lg:self-end text-center lg:text-left flex flex-col items-center lg:items-start w-full order-1"
             >
               <h1 className="font-poppins font-black text-3xl sm:text-4xl lg:text-5xl text-white tracking-tight leading-tight mb-2">
                 Madurai <span className="text-[#f5c842]">Best</span> Tours and Travels
@@ -338,7 +338,7 @@ const Home = () => {
                 {t('Best Taxi Service in Madurai • Airport Pickup • Tour Packages • Tempo Traveller Rental')}
               </p>
 
-              <div className="mb-6 lg:mb-4 w-full flex items-center justify-start">
+              <div className="mb-6 lg:mb-4 w-full flex items-center justify-center lg:justify-start">
                 <img
                   src={HeroImage}
                   alt="Madurai Best Tours and Travels - Premium Taxi Fleet"
@@ -352,7 +352,7 @@ const Home = () => {
               initial={{ opacity: 0, x: -30 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8, delay: 0.1 }}
-              className="lg:col-span-7 lg:row-start-2 lg:col-start-1 lg:self-start text-left flex flex-col items-start w-full order-3"
+              className="lg:col-span-7 lg:row-start-2 lg:col-start-1 lg:self-start text-center lg:text-left flex flex-col items-center lg:items-start w-full order-3"
             >
               <p className="text-white/80 text-sm max-w-lg mb-6 leading-relaxed">
                 {t('Curated heritage journeys, temple tours, hill stations & coastal escapes crafted with comfort and trust.')}
@@ -360,7 +360,7 @@ const Home = () => {
 
               <div className="w-24 h-1 bg-[#d4951e] mb-8 rounded-full" />
 
-              <div className="flex flex-wrap gap-3">
+              <div className="flex flex-wrap justify-center lg:justify-start gap-3">
                 <a href="tel:6382513075" className="flex items-center gap-2.5 px-8 py-3.5 bg-[#d4951e] hover:bg-[#f0a93a] text-white font-bold rounded-full transition-all text-xs uppercase tracking-wider shadow-lg">
                   <PhoneCall className="w-4 h-4" /> {t('Call +91 63825 13075')}
                 </a>
@@ -681,7 +681,7 @@ const Home = () => {
                             </div>
                           ));
                         }
-                        
+
                         // Legacy Fallback
                         return (
                           <>
@@ -747,6 +747,70 @@ const Home = () => {
                 </div>
               </motion.div>
             ))}
+          </div>
+        </div>
+      </section>
+
+
+
+      {/* ── ABOUT US & WHY CHOOSE US ─────────────────────── */}
+      <section className="py-16 lg:py-24 bg-white relative overflow-hidden">
+        <div className="max-w-7xl mx-auto px-4 lg:px-6 relative z-10">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+
+            {/* Left Content */}
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="text-left"
+            >
+              <span className="text-[#d4951e] text-xs font-bold uppercase tracking-widest block mb-3">
+                {t('About Us')}
+              </span>
+              <h2 className="text-3xl sm:text-4xl lg:text-[2.5rem] font-poppins font-black text-[#1a3c34] leading-tight mb-6">
+                {t('Best Tours and Travels in Madurai')}
+              </h2>
+              <p className="text-gray-600 text-sm md:text-base leading-relaxed mb-8">
+                {t('Madurai Best Tours and Travels is a trusted travel agency in Madurai offering local taxi booking, airport pickup and drop, Tempo Traveller rental, Madurai sightseeing tours, Madurai to Rameswaram taxi service, Kodaikanal cab booking and South India holiday packages.')}
+              </p>
+
+              <h3 className="text-2xl font-poppins font-bold text-[#1a3c34] mb-4">
+                {t('Why Choose Madurai Best Tours and Travels?')}
+              </h3>
+              <p className="text-gray-600 text-sm md:text-base leading-relaxed mb-8">
+                {t('Madurai Best Tours and Travels offers Madurai Best Tours and Travels Taxi Service, airport transfers, tempo traveller rentals, local sightseeing and South India tour packages. We guarantee the best rates, well-maintained vehicles, and professional drivers to ensure your journey is safe and comfortable.')}
+              </p>
+            </motion.div>
+
+            {/* Right Content - Checklist Grid */}
+            <motion.div
+              initial={{ opacity: 0, x: 30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              className="bg-[#fcfaf7] border border-[#d4951e]/20 rounded-3xl p-8 sm:p-10 shadow-xl"
+            >
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-y-6 gap-x-4">
+                {[
+                  '24×7 Taxi Service',
+                  'Professional Drivers',
+                  'Clean Vehicles',
+                  'Transparent Pricing',
+                  'GPS Enabled',
+                  'Airport Pickup',
+                  'Family Packages',
+                  '1000+ Happy Customers'
+                ].map((feature, idx) => (
+                  <div key={idx} className="flex items-center gap-3">
+                    <div className="w-8 h-8 rounded-full bg-[#1a3c34] flex items-center justify-center shrink-0">
+                      <CheckCircle2 className="w-4.5 h-4.5 text-[#f5c842]" />
+                    </div>
+                    <span className="text-[#1a3c34] font-bold text-[15px]">{t(feature)}</span>
+                  </div>
+                ))}
+              </div>
+            </motion.div>
+
           </div>
         </div>
       </section>
@@ -895,42 +959,7 @@ const Home = () => {
         </div>
       </section>
 
-      {/* ── WHY TRAVEL WITH US ────────────────────────────── */}
-      <section className="py-12 lg:py-24 bg-[#f5f0e8]">
-        <div className="max-w-7xl mx-auto px-4 lg:px-6">
-          <SectionHeader
-            tag="Why Travel With Us?"
-            title="One Land. Endless Experiences."
-            subtitle="From mist-clad mountains to spiritual Coromandel shores — explore South India like never before."
-          />
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {[
-              { icon: <ShieldCheck className="w-6 h-6 text-[#d4951e]" />, title: 'Safe & Secure', desc: 'Your safety is our highest priority.' },
-              { icon: <Clock className="w-6 h-6 text-[#d4951e]" />, title: 'On-Time Guarantee', desc: 'We value your time and ensure punctuality.' },
-              { icon: <Wallet className="w-6 h-6 text-[#d4951e]" />, title: 'Transparent Pricing', desc: 'No hidden charges. What you see is what you pay.' },
-              { icon: <PhoneCall className="w-6 h-6 text-[#d4951e]" />, title: '24/7 Customer Support', desc: 'We\'re here to assist you anytime, anywhere.' },
-            ].map((item, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.08 }}
-                className="bg-white rounded-2xl p-5 border border-[#edeae1] shadow-sm flex items-center gap-4 text-left transition-all duration-300 hover:shadow-md"
-              >
-                <div className="w-12 h-12 rounded-full bg-[#fcf8ee] border border-[#f5c842]/30 flex items-center justify-center shrink-0">
-                  {item.icon}
-                </div>
-                <div>
-                  <h3 className="font-poppins font-bold text-[#0f2420] text-sm mb-1">{t(item.title)}</h3>
-                  <p className="text-gray-500 text-[11px] leading-snug">{t(item.desc)}</p>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
 
       {/* ── STATS ────────────────────────────────────────── */}
       <section className="py-10 lg:py-20 bg-[#1a3c34] relative overflow-hidden">
@@ -1012,9 +1041,9 @@ const Home = () => {
               <div className="text-xs text-white/70">Trusted across South India</div>
             </div>
           </div>
-          
+
           <div className="h-12 w-px bg-white/20 hidden md:block"></div>
-          
+
           <div className="flex items-center gap-5">
             <div className="text-5xl font-black text-[#f5c842]">5.0</div>
             <div className="text-left">
@@ -1035,15 +1064,15 @@ const Home = () => {
             title={<>Discover <span className="text-[#d4951e] font-dancing text-5xl normal-case font-bold">South India</span></>}
             subtitle="Watch the breathtaking landscapes and cultural heritage that awaits you."
           />
-          
+
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 max-w-6xl mx-auto">
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               className="relative w-full rounded-[2rem] overflow-hidden shadow-2xl border-[6px] border-[#f5f0e8] aspect-video group cursor-pointer"
             >
-              <video 
+              <video
                 className="absolute top-0 left-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.02]"
                 src={PromoVideo1}
                 autoPlay
@@ -1054,14 +1083,14 @@ const Home = () => {
               />
             </motion.div>
 
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.2 }}
               className="relative w-full rounded-[2rem] overflow-hidden shadow-2xl border-[6px] border-[#f5f0e8] aspect-video group cursor-pointer"
             >
-              <video 
+              <video
                 className="absolute top-0 left-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.02]"
                 src={PromoVideo2}
                 autoPlay
