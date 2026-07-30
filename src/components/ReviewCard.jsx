@@ -88,11 +88,11 @@ const ReviewCard = ({ review }) => {
 
         {/* Attached Review Image */}
         {reviewImage && (
-          <div className="mt-2 mb-3 rounded-xl overflow-hidden relative group shrink-0">
+          <div className="mt-4 mb-3 rounded-2xl overflow-hidden relative group shrink-0">
             <img 
               src={reviewImage} 
               alt="Review attachment" 
-              className="w-full h-28 sm:h-32 object-cover transition-transform duration-500 group-hover:scale-105"
+              className="w-full h-44 sm:h-52 object-cover transition-transform duration-500 group-hover:scale-105"
               loading="lazy"
             />
             <div className="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-all duration-500 pointer-events-none"></div>
