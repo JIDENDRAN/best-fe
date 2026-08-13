@@ -6,50 +6,29 @@ import { fetchGoogleReviews } from '../utils/googleReviewsService';
 import ReviewCard from './ReviewCard';
 import MeenakshiBg from '../assets/meenakshi_bg.png';
 
-// Fallback Reviews Local Asset Imports
-import Feedback1 from '../assets/feedback_1.jpg';
-import Feedback2 from '../assets/feedback_2.jpg';
-import Feedback3 from '../assets/feedback_3.jpg';
-import Feedback4 from '../assets/feedback_4.jpg';
-import FeedbackNew1 from '../assets/feedback_new_1.jpg';
-import FeedbackNew2 from '../assets/feedback_new_2.jpg';
-import FeedbackNew3 from '../assets/feedback_new_3.jpg';
-import WA1 from '../assets/WhatsApp Image 2026-06-10 at 12.19.24 PM.jpeg';
-import WA2 from '../assets/WhatsApp Image 2026-06-10 at 12.19.24 PM (1).jpeg';
-import WA3 from '../assets/WhatsApp Image 2026-06-10 at 12.19.25 PM.jpeg';
-import WA4 from '../assets/WhatsApp Image 2026-06-10 at 12.19.25 PM (1).jpeg';
-import WA5 from '../assets/WhatsApp Image 2026-06-10 at 12.19.26 PM.jpeg';
-import WA6 from '../assets/WhatsApp Image 2026-06-10 at 12.19.27 PM.jpeg';
-import WA7 from '../assets/WhatsApp Image 2026-06-10 at 12.19.27 PM (1).jpeg';
-import WA8 from '../assets/WhatsApp Image 2026-06-10 at 12.19.28 PM.jpeg';
-import WA9 from '../assets/WhatsApp Image 2026-07-30 at 1.26.04 PM.jpeg';
-import WA10 from '../assets/WhatsApp Image 2026-07-30 at 11.08.37 AM.jpeg';
-import WA11 from '../assets/WhatsApp Image 2026-07-30 at 11.08.39 AM.jpeg';
-import WA12 from '../assets/WhatsApp Image 2026-07-30 at 11.08.40 AM.jpeg';
-import WA13 from '../assets/WhatsApp Image 2026-07-30 at 3.17.44 PM.jpeg';
 
 // Local reviews fallback dataset
 const LOCAL_FALLBACK_REVIEWS = [
-  { name: 'Rajesh Kannan & Family', text: 'Perfect family tour to Rameswaram & Madurai! Exceptionally clean vehicle & safe driving.', role: 'Coimbatore', rating: 5, avatar: Feedback1 },
-  { name: 'Abhishek & Family', text: 'Amazing 5-day South India trip! Punctual driver, great routes, and super comfortable ride.', role: 'Bangalore', rating: 5, avatar: Feedback2 },
-  { name: 'Sunita Deshmukh', text: 'Super comfortable Innova Crysta. As solo women travelers, we felt extremely safe!', role: 'Pune', rating: 5, avatar: Feedback3 },
-  { name: 'Dr. Sandeep Sen & Group', text: 'Excellent service! Large vehicle, accommodated all luggage, and friendly driver.', role: 'Kolkata', rating: 5, avatar: Feedback4 },
-  { name: 'Aarthi & Friends', text: 'Perfect sunset tour! Extremely safe driving and clean car.', role: 'Chennai', rating: 5, avatar: FeedbackNew1 },
-  { name: 'Rajesh & Family', text: 'Top-notch service! The driver was friendly, punctual, and very helpful.', role: 'Bangalore', rating: 5, avatar: FeedbackNew2 },
-  { name: 'Sanjay Kumar & Group', text: 'Very comfortable ride. The driver knew all local spots and guided us well.', role: 'Hyderabad', rating: 5, avatar: FeedbackNew3 },
-  { name: 'Vinoth Kumar & Family', text: 'Very professional driver. The tour was extremely comfortable and safe.', role: 'Salem', rating: 5, avatar: WA1 },
-  { name: 'Meenakshi S. & Friends', text: 'Awesome tour! Visited all local temples with zero stress.', role: 'Madurai', rating: 5, avatar: WA2 },
-  { name: 'Devendra Nath', text: 'Clean car and highly punctual pickup. Recommend them to everyone!', role: 'Chennai', rating: 5, avatar: WA3 },
-  { name: 'Harish & Family', text: 'Best taxi service for family trips. Safe, quick, and polite service.', role: 'Trichy', rating: 5, avatar: WA4 },
-  { name: 'Rakesh Balakrishnan', text: 'Very polite driver who knew all routes perfectly. Highly recommended!', role: 'Bangalore', rating: 5, avatar: WA5 },
-  { name: 'Sneha Patel', text: 'Felt extremely safe as a solo traveler. Wonderful experience!', role: 'Ahmedabad', rating: 5, avatar: WA6 },
-  { name: 'Gurbaksh Singh', text: 'Spacious vehicle, clean AC, and very professional behavior. 5 stars!', role: 'Delhi', rating: 5, avatar: WA7 },
-  { name: 'Prabhu Devan', text: 'Smooth and budget-friendly trip. Will definitely book again!', role: 'Kochi', rating: 5, avatar: WA8 },
-  { name: 'Thiruppathi', text: 'Complete Tirupati trip with excellent airport pickup and drop service. Highly recommended!', role: 'Tirupati', rating: 5, avatar: WA9 },
-  { name: 'Kavitha S', text: 'Beautiful temples and smooth travel! The driver was very patient.', role: 'Madurai', rating: 5, avatar: WA10 },
-  { name: 'Ramesh Babu', text: 'Excellent cab service. The car was very clean and well maintained.', role: 'Chennai', rating: 5, avatar: WA11 },
-  { name: 'Srinivasan & Co', text: 'Great experience overall. Covered all the places on time.', role: 'Trichy', rating: 5, avatar: WA12 },
-  { name: 'Lakshmi Narayanan', text: 'Highly recommend this travels for family trips!', role: 'Coimbatore', rating: 5, avatar: WA13 }
+  { name: 'Rajesh Kannan & Family', text: 'Perfect family tour to Rameswaram & Madurai! Exceptionally clean vehicle & safe driving.', role: 'Coimbatore', rating: 5 },
+  { name: 'Abhishek & Family', text: 'Amazing 5-day South India trip! Punctual driver, great routes, and super comfortable ride.', role: 'Bangalore', rating: 5 },
+  { name: 'Sunita Deshmukh', text: 'Super comfortable Innova Crysta. As solo women travelers, we felt extremely safe!', role: 'Pune', rating: 5 },
+  { name: 'Dr. Sandeep Sen & Group', text: 'Excellent service! Large vehicle, accommodated all luggage, and friendly driver.', role: 'Kolkata', rating: 5 },
+  { name: 'Aarthi & Friends', text: 'Perfect sunset tour! Extremely safe driving and clean car.', role: 'Chennai', rating: 5 },
+  { name: 'Rajesh & Family', text: 'Top-notch service! The driver was friendly, punctual, and very helpful.', role: 'Bangalore', rating: 5 },
+  { name: 'Sanjay Kumar & Group', text: 'Very comfortable ride. The driver knew all local spots and guided us well.', role: 'Hyderabad', rating: 5 },
+  { name: 'Vinoth Kumar & Family', text: 'Very professional driver. The tour was extremely comfortable and safe.', role: 'Salem', rating: 5 },
+  { name: 'Meenakshi S. & Friends', text: 'Awesome tour! Visited all local temples with zero stress.', role: 'Madurai', rating: 5 },
+  { name: 'Devendra Nath', text: 'Clean car and highly punctual pickup. Recommend them to everyone!', role: 'Chennai', rating: 5 },
+  { name: 'Harish & Family', text: 'Best taxi service for family trips. Safe, quick, and polite service.', role: 'Trichy', rating: 5 },
+  { name: 'Rakesh Balakrishnan', text: 'Very polite driver who knew all routes perfectly. Highly recommended!', role: 'Bangalore', rating: 5 },
+  { name: 'Sneha Patel', text: 'Felt extremely safe as a solo traveler. Wonderful experience!', role: 'Ahmedabad', rating: 5 },
+  { name: 'Gurbaksh Singh', text: 'Spacious vehicle, clean AC, and very professional behavior. 5 stars!', role: 'Delhi', rating: 5 },
+  { name: 'Prabhu Devan', text: 'Smooth and budget-friendly trip. Will definitely book again!', role: 'Kochi', rating: 5 },
+  { name: 'Thiruppathi', text: 'Complete Tirupati trip with excellent airport pickup and drop service. Highly recommended!', role: 'Tirupati', rating: 5 },
+  { name: 'Kavitha S', text: 'Beautiful temples and smooth travel! The driver was very patient.', role: 'Madurai', rating: 5 },
+  { name: 'Ramesh Babu', text: 'Excellent cab service. The car was very clean and well maintained.', role: 'Chennai', rating: 5 },
+  { name: 'Srinivasan & Co', text: 'Great experience overall. Covered all the places on time.', role: 'Trichy', rating: 5 },
+  { name: 'Lakshmi Narayanan', text: 'Highly recommend this travels for family trips!', role: 'Coimbatore', rating: 5 }
 ];
 
 // Single Skeleton Card
@@ -107,7 +86,6 @@ const GoogleReviews = () => {
         const mappedFallbackReviews = LOCAL_FALLBACK_REVIEWS.map(r => ({
           authorName: r.name,
           authorPhoto: null,
-          reviewImage: r.avatar,
           rating: r.rating,
           text: r.text,
           relativeTime: r.role, // Display city location as relativeTime

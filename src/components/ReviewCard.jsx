@@ -13,8 +13,7 @@ const ReviewCard = ({ review }) => {
     rating,
     text,
     relativeTime,
-    languageCode,
-    reviewImage
+    languageCode
   } = review;
 
   const [isExpanded, setIsExpanded] = useState(false);
@@ -86,18 +85,6 @@ const ReviewCard = ({ review }) => {
           )}
         </p>
 
-        {/* Attached Review Image */}
-        {reviewImage && (
-          <div className="mt-4 mb-3 rounded-2xl overflow-hidden relative group shrink-0">
-            <img 
-              src={reviewImage} 
-              alt="Review attachment" 
-              className="w-full h-44 sm:h-52 object-cover transition-transform duration-500 group-hover:scale-105"
-              loading="lazy"
-            />
-            <div className="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-all duration-500 pointer-events-none"></div>
-          </div>
-        )}
       </div>
 
       {/* Optional review language translation info */}

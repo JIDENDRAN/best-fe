@@ -34,8 +34,6 @@ import CochinBg from '../assets/cochin_bg.png';
 import AlleppeyBg from '../assets/alleppey_bg.png';
 import TrivandrumBg from '../assets/trivandrum_bg.png';
 import AthirapillyBg from '../assets/athirapilly_bg.png';
-import PromoVideo1 from '../assets/WhatsApp Video 2026-07-27 at 11.43.02 AM.mp4';
-import PromoVideo2 from '../assets/WhatsApp Video 2026-07-27 at 11.43.02 AM (1).mp4';
 
 // ─── Default Data ────────────────────────────────────────────
 const parseDesc = (descString) => {
@@ -1052,54 +1050,6 @@ const Home = () => {
               </div>
               <div className="text-[11px] text-white/90 font-bold tracking-widest uppercase">Google Ratings</div>
             </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ── VIDEO SECTION ───────────────────────────────────── */}
-      <section className="py-12 lg:py-24 bg-white">
-        <div className="max-w-7xl mx-auto px-4 lg:px-6">
-          <SectionHeader
-            tag="Experience the Journey"
-            title={<>Discover <span className="text-[#d4951e] font-dancing text-5xl normal-case font-bold">South India</span></>}
-            subtitle="Watch the breathtaking landscapes and cultural heritage that awaits you."
-          />
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 max-w-6xl mx-auto">
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              className="relative w-full rounded-[2rem] overflow-hidden shadow-2xl border-[6px] border-[#f5f0e8] aspect-video group cursor-pointer"
-            >
-              <video
-                className="absolute top-0 left-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.02]"
-                src={PromoVideo1}
-                autoPlay
-                muted
-                loop
-                playsInline
-                controls
-              />
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.2 }}
-              className="relative w-full rounded-[2rem] overflow-hidden shadow-2xl border-[6px] border-[#f5f0e8] aspect-video group cursor-pointer"
-            >
-              <video
-                className="absolute top-0 left-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.02]"
-                src={PromoVideo2}
-                autoPlay
-                muted
-                loop
-                playsInline
-                controls
-              />
-            </motion.div>
           </div>
         </div>
       </section>
